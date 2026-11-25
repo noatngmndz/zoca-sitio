@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='60 34 56 64'%3E%3Crect x='60' y='34' width='56' height='64' rx='8' fill='%231B3320'/%3E%3Cg fill='none' stroke='%23F5F0E0' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M70 92h36M76 92v-10h24v10M76 82l4-3h16l4 3M88 79V50M88 62c-10 0-16-6-16-14 9 0 16 5 16 14zM88 56c10 0 16-6 16-14-9 0-16 5-16 14z'/%3E%3C/g%3E%3C/svg%3E">
+  <title>Zoca | Refrigeracion modular para el campo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Cormorant+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F5F0E8;
+      --cream-dark: #EDE7D5;
+      --forest: #122E3E;
+      --sage: #3A5853;
+      --sage-light: #759A72;
+      --gold: #C4873A;
+      --text: #1a2e1e;
+      --text-muted: #5a6b5c;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: var(--cream); color: var(--text); }
+    a { color: var(--gold); }
+    button { cursor: pointer; font-family: inherit; }
+
+    /* NAV */
+    .zoca-nav { position: sticky; top: 0; z-index: 100; background: rgba(245,240,232,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(58,88,83,0.2); padding: 0 48px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .zoca-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-wordmark { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 26px; color: var(--forest); font-style: italic; }
+    .logo-wordmark span { color: var(--sage); }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-link { font-size: 13px; font-weight: 500; color: var(--text-muted); background: none; border: none; padding: 0; transition: color 0.2s; }
+    .nav-link:hover { color: var(--forest); }
+    .lang-btn { background: none; border: 1.5px solid rgba(58,88,83,0.35); border-radius: 6px; color: var(--sage); font-size: 13px; font-weight: 600; padding: 6px 16px; transition: all 0.2s; }
+    .lang-btn:hover { background: rgba(58,88,83,0.08); border-color: var(--sage); }
+
+    /* HERO */
+    .hero { position: relative; overflow: hidden; }
+    .hero-img { width: 100%; height: 580px; object-fit: cover; display: block; filter: brightness(0.52); }
+    .hero-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; padding: 0 72px; }
+    .hero-label { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 18px; }
+    .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 5.5vw, 80px); font-weight: 600; line-height: 1.05; color: #fff; margin: 0 0 22px; max-width: 740px; }
+    .hero-sub { font-size: 16px; line-height: 1.65; color: rgba(255,255,255,0.78); max-width: 500px; margin: 0 0 40px; }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary { background: #fff; color: var(--forest); font-size: 14px; font-weight: 700; padding: 13px 30px; border: none; border-radius: 7px; transition: background 0.2s; }
+    .btn-primary:hover { background: var(--cream); }
+    .btn-outline { background: none; border: 1.5px solid rgba(255,255,255,0.55); color: #fff; font-size: 14px; font-weight: 500; padding: 13px 30px; border-radius: 7px; transition: all 0.2s; }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.9); }
+
+    /* STATS */
+    .stats-row { background: var(--cream-dark); border-top: 1px solid rgba(58,88,83,0.2); border-bottom: 1px solid rgba(58,88,83,0.2); }
+    .stats-inner { max-width: 1280px; margin: 0 auto; padding: 36px 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .stat-item { text-align: center; }
+    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 600; color: var(--sage); letter-spacing: -0.5px; line-height: 1; }
+    .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 6px; line-height: 1.4; }
+
+    /* SECTION WRAPPER */
+    .section { max-width: 1280px; margin: 0 auto; padding: 80px 48px; }
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--sage); margin-bottom: 14px; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 3.5vw, 52px); font-weight: 600; letter-spacing: -0.3px; color: var(--forest); margin: 0 0 48px; line-height: 1.1; }
+
+    /* HOW IT WORKS — image strip */
+    .how-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 48px; border-radius: 12px; overflow: hidden; }
+    .how-step-img { position: relative; height: 260px; overflow: hidden; }
+    .how-step-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
+    .how-step-img:hover img { transform: scale(1.04); }
+    .how-step-label { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(18,46,62,0.85), transparent); padding: 24px 20px 18px; color: #fff; }
+    .how-step-num { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600; line-height: 1; }
+    .how-step-name { font-size: 13px; font-weight: 500; margin-top: 4px; color: rgba(255,255,255,0.85); }
+
+    /* KITS */
+    .kits-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .kit-card { background: #fff; border: 1px solid rgba(58,88,83,0.18); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; transition: box-shadow 0.2s; }
+    .kit-card:hover { box-shadow: 0 6px 28px rgba(18,46,62,0.1); }
+    .kit-card.featured { border-color: rgba(58,88,83,0.4); }
+    .kit-img { width: 100%; height: 220px; object-fit: cover; display: block; }
+    .kit-body { padding: 28px 28px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+    .kit-badge { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--sage); }
+    .kit-card.featured .kit-badge { color: var(--gold); }
+    .kit-name { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--forest); }
+    .kit-price { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 600; color: var(--forest); letter-spacing: -0.5px; }
+    .kit-price span { font-size: 15px; font-weight: 400; color: var(--text-muted); font-family: 'Inter', sans-serif; }
+    .kit-monthly { font-size: 13px; color: var(--sage); font-weight: 500; }
+    .kit-features { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-direction: column; gap: 7px; }
+    .kit-features li { font-size: 13px; color: var(--text-muted); display: flex; gap: 10px; align-items: flex-start; }
+    .kit-features li::before { content: ''; display: block; width: 5px; height: 5px; min-width: 5px; background: var(--sage-light); border-radius: 50%; margin-top: 5px; }
+    .kit-btn { margin-top: auto; background: var(--forest); color: var(--cream); font-size: 14px; font-weight: 600; padding: 12px 24px; border: none; border-radius: 7px; transition: background 0.2s; align-self: flex-start; }
+    .kit-btn:hover { background: #1e3f52; }
+
+    /* PAYMENT NOTE */
+    .payment-note { background: rgba(58,88,83,0.08); border: 1px solid rgba(58,88,83,0.2); border-radius: 8px; padding: 14px 18px; font-size: 13px; color: var(--text-muted); margin-top: 20px; line-height: 1.5; }
+    .payment-note strong { color: var(--sage); }
+
+    /* CONFIGURATOR — IKEA ACCORDION */
+    .configurator-section { background: var(--cream-dark); border-top: 1px solid rgba(58,88,83,0.15); border-bottom: 1px solid rgba(58,88,83,0.15); }
+    .configurator-inner { max-width: 1200px; margin: 0 auto; padding: 80px 48px; }
+    .config-header { margin-bottom: 40px; }
+    .config-layout { display: grid; grid-template-columns: 1fr 380px; gap: 36px; align-items: start; }
+    /* Accordion */
+    .config-steps { display: flex; flex-direction: column; border: 1px solid rgba(58,88,83,0.2); border-radius: 14px; overflow: hidden; background: #fff; }
+    .config-step { border-bottom: 1px solid rgba(58,88,83,0.12); }
+    .config-step:last-child { border-bottom: none; }
+    .config-step-header { display: flex; align-items: center; padding: 20px 24px; cursor: pointer; gap: 14px; transition: background 0.15s; user-select: none; list-style: none; }
+    .config-step-header:hover { background: rgba(58,88,83,0.03); }
+    .config-step.open > .config-step-header { background: rgba(58,88,83,0.05); }
+    .config-step-num { width: 30px; height: 30px; min-width: 30px; border-radius: 50%; background: var(--cream-dark); border: 1.5px solid rgba(58,88,83,0.25); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--text-muted); transition: all 0.2s; }
+    .config-step.open > .config-step-header .config-step-num { background: var(--sage); border-color: var(--sage); color: #fff; }
+    .config-step.done > .config-step-header .config-step-num { background: var(--sage-light); border-color: var(--sage-light); color: #fff; }
+    .config-step-meta { flex: 1; }
+    .config-step-title { font-size: 14px; font-weight: 600; color: var(--forest); letter-spacing: 0; }
+    .config-step-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .config-step-chevron { width: 18px; height: 18px; color: var(--text-muted); transition: transform 0.25s; flex-shrink: 0; }
+    .config-step.open > .config-step-header .config-step-chevron { transform: rotate(180deg); }
+    .config-step-body { display: none; padding: 4px 24px 24px; }
+    .config-step.open > .config-step-body { display: block; }
+    .config-options { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; margin-top: 8px; }
+    .config-opt { background: var(--cream); border: 2px solid transparent; border-radius: 10px; padding: 14px 16px; cursor: pointer; transition: all 0.18s; text-align: left; outline: none; position: relative; display: flex; flex-direction: column; gap: 4px; }
+    .config-opt:hover { border-color: rgba(58,88,83,0.4); background: #fff; }
+    .config-opt.selected { border-color: var(--sage); background: #fff; }
+    .config-opt-icon { width: 30px; height: 30px; margin-bottom: 4px; }
+    .config-opt-name { font-size: 13px; font-weight: 600; color: var(--forest); }
+    .config-opt-detail { font-size: 11px; color: var(--text-muted); font-weight: 400; line-height: 1.4; }
+    .config-opt-price { font-size: 12px; color: var(--sage); font-weight: 700; margin-top: 4px; }
+    .config-opt-check { position: absolute; top: 9px; right: 9px; width: 16px; height: 16px; border-radius: 50%; background: var(--sage); display: none; align-items: center; justify-content: center; }
+    .config-opt.selected .config-opt-check { display: flex; }
+    .config-opt-check::after { content: ''; width: 4px; height: 7px; border: 1.5px solid #fff; border-top: none; border-left: none; transform: rotate(45deg) translateY(-1px); display: block; }
+    .step-continue { margin-top: 16px; background: var(--forest); color: var(--cream); font-size: 13px; font-weight: 600; padding: 10px 24px; border: none; border-radius: 7px; cursor: pointer; transition: background 0.2s; }
+    .step-continue:hover { background: var(--sage); }
+    /* Summary card with chamber diagram */
+    .summary-card { background: #fff; border: 1px solid rgba(58,88,83,0.25); border-radius: 14px; overflow: hidden; position: sticky; top: 88px; }
+    .summary-visual { background: var(--forest); padding: 20px 20px 16px; }
+    .summary-visual-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 10px; }
+    #chamber-svg { width: 100%; display: block; }
+    .summary-body { padding: 22px 24px; }
+    .summary-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--forest); margin-bottom: 16px; }
+    .summary-line { display: flex; justify-content: space-between; align-items: flex-start; padding: 9px 0; border-bottom: 1px solid rgba(58,88,83,0.1); font-size: 13px; }
+    .summary-line:last-child { border-bottom: none; }
+    .summary-line-label { color: var(--text-muted); font-weight: 400; }
+    .summary-line-val { color: var(--forest); font-weight: 500; text-align: right; }
+    .summary-price-row { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 0 8px; border-top: 2px solid rgba(58,88,83,0.15); margin-top: 4px; }
+    .summary-price-label { font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); }
+    .summary-price { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 700; color: var(--forest); }
+    .summary-monthly { font-size: 11px; color: var(--text-muted); padding-bottom: 4px; }
+    .summary-cta { display: block; width: 100%; background: var(--gold); color: #fff; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; padding: 13px; border: none; border-radius: 8px; cursor: pointer; margin-top: 14px; transition: background 0.2s; text-align: center; }
+    .summary-cta:hover { background: #b37a32; }
+    @media (max-width: 900px) { .config-layout { grid-template-columns: 1fr; } .summary-card { position: static; } .configurator-inner { padding: 60px 24px; } }
+
+
+    /* PLANS */
+    .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .plan-card { background: #fff; border: 1px solid rgba(58,88,83,0.2); border-radius: 12px; padding: 28px; }
+    .plan-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--forest); margin-bottom: 6px; }
+    .plan-price { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 600; color: var(--sage); letter-spacing: -0.5px; }
+    .plan-price span { font-size: 14px; font-weight: 400; color: var(--text-muted); font-family: 'Inter', sans-serif; }
+    .plan-desc { font-size: 13px; color: var(--text-muted); margin-top: 10px; line-height: 1.55; }
+    .plan-features { list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-direction: column; gap: 7px; }
+    .plan-features li { font-size: 13px; color: var(--text-muted); display: flex; gap: 8px; align-items: flex-start; }
+    .plan-features li::before { content: ''; display: block; width: 5px; height: 5px; min-width: 5px; background: var(--sage-light); border-radius: 50%; margin-top: 5px; }
+
+    /* FARM BANNER */
+    .farm-banner { position: relative; overflow: hidden; height: 320px; }
+    .farm-banner img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.45); }
+    .farm-banner-text { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 40px; }
+    .farm-banner-text h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3vw, 46px); font-weight: 600; color: #fff; margin: 0 0 14px; }
+    .farm-banner-text p { font-size: 15px; color: rgba(255,255,255,0.8); margin: 0 0 28px; max-width: 540px; }
+
+    /* DIVIDER */
+    .divider { border: none; border-top: 1px solid rgba(58,88,83,0.15); margin: 0; }
+
+    /* ORDER */
+    .order-section { background: var(--cream-dark); border-top: 1px solid rgba(58,88,83,0.15); border-bottom: 1px solid rgba(58,88,83,0.15); }
+    .order-inner { max-width: 720px; margin: 0 auto; padding: 80px 48px; }
+    .form-title { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 600; color: var(--forest); margin: 0 0 8px; letter-spacing: -0.3px; }
+    .form-sub { font-size: 15px; color: var(--text-muted); margin: 0 0 36px; }
+    .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
+    label { font-size: 13px; font-weight: 500; color: var(--text-muted); }
+    input, select, textarea { background: #fff; border: 1px solid rgba(58,88,83,0.3); border-radius: 8px; color: var(--forest); font-size: 15px; font-family: 'Inter', sans-serif; padding: 12px 16px; width: 100%; transition: border-color 0.2s; outline: none; }
+    input:focus, select:focus, textarea:focus { border-color: var(--sage); }
+    input::placeholder, textarea::placeholder { color: rgba(90,107,92,0.4); }
+    textarea { resize: vertical; min-height: 90px; }
+    .form-submit { background: var(--forest); color: var(--cream); font-size: 15px; font-weight: 600; padding: 15px 40px; border: none; border-radius: 8px; width: 100%; margin-top: 8px; transition: background 0.2s; }
+    .form-submit:hover { background: #1e3f52; }
+    .form-note { font-size: 12px; color: rgba(90,107,92,0.7); text-align: center; margin-top: 12px; line-height: 1.5; }
+    .success-box { background: rgba(117,154,114,0.1); border: 1px solid rgba(58,88,83,0.3); border-radius: 10px; padding: 48px 32px; text-align: center; }
+    .success-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 600; color: var(--sage); margin: 0 0 12px; }
+    .success-box p { font-size: 15px; color: var(--text-muted); margin: 0; }
+
+    /* FOOTER */
+    .footer { max-width: 1280px; margin: 0 auto; padding: 48px 48px 64px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .footer-logo { display: flex; align-items: center; gap: 8px; }
+    .footer-logo-text { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 24px; color: var(--forest); font-style: italic; }
+    .footer-logo-text span { color: var(--sage); }
+    .footer-copy { font-size: 13px; color: rgba(90,107,92,0.6); }
+
+    /* LANG VISIBILITY */
+    [data-lang] { display: none; }
+    [data-lang].active { display: block; }
+    [data-lang-inline] { display: none; }
+    [data-lang-inline].active { display: inline; }
+
+    @media (max-width: 900px) {
+      .config-layout { grid-template-columns: 1fr; }
+      .summary-card { position: static; }
+    }
+    @media (max-width: 768px) {
+      .zoca-nav { padding: 0 20px; }
+      .nav-links { gap: 14px; }
+      .hero-overlay { padding: 0 28px; }
+      .stats-inner { padding: 28px 20px; gap: 12px; }
+      .stat-num { font-size: 30px; }
+      .section { padding: 56px 20px; }
+      .how-strip { grid-template-columns: 1fr; }
+      .how-step-img { height: 200px; }
+      .kits-grid { grid-template-columns: 1fr; }
+      .plans-grid { grid-template-columns: 1fr; }
+      .configurator-inner { padding: 56px 20px; }
+      .config-options { flex-direction: column; }
+      .config-opt { min-width: unset; }
+      .order-inner { padding: 56px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer { padding: 36px 20px 48px; flex-direction: column; align-items: flex-start; }
+    }
+  
+    /* ===== REGAL CREST THEME ===== */
+    :root {
+      --green-900: #1B3320;
+      --green-800: #213D27;
+      --green-700: #2D4A2D;
+      --cream: #F5F0E0;
+      --cream-dark: #ECE5CF;
+      --ivory: #FBF8EF;
+      --forest: #1E3A24;
+      --sage: #2D4A2D;
+      --sage-light: #7C9A6E;
+      --gold: #B98A4A;
+      --text: #1E2A1F;
+      --text-muted: #59665A;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sc: 'Cormorant SC', 'Cormorant Garamond', Georgia, serif;
+    }
+    body { font-family: var(--serif); font-size: 18px; background: var(--cream); color: var(--text); -webkit-font-smoothing: antialiased; }
+    body, button, input, select, textarea { font-family: var(--serif) !important; }
+    h1, h2, h3, .section-title, .form-title, .kit-name, .plan-name, .summary-title { font-family: var(--sc) !important; font-weight: 500 !important; letter-spacing: 0.04em !important; }
+    .section-label, .kit-badge, .hero-label, .config-step-title, .summary-visual-label { font-family: var(--sc) !important; letter-spacing: 0.16em !important; text-transform: none !important; font-weight: 600 !important; }
+    .section-label { font-size: 17px !important; color: var(--gold) !important; }
+    .section-title { font-size: clamp(36px, 4vw, 56px) !important; color: var(--forest) !important; }
+    .kit-features li, .plan-features li, .plan-desc, .kit-monthly, .config-step-subtitle, .payment-note, .form-sub, label, .summary-line { font-size: 16px !important; }
+    .kit-price span, .plan-price span { font-family: var(--serif) !important; }
+
+    /* NAV over hero */
+    .zoca-nav { position: fixed; left: 0; right: 0; top: 0; background: transparent; border-bottom: 1px solid rgba(245,240,224,0.18); backdrop-filter: none; height: 76px; transition: background .35s, border-color .35s; }
+    .zoca-nav .logo-wordmark { font-family: var(--sc); font-style: normal; font-size: 26px; letter-spacing: 0.18em; color: var(--cream); font-weight: 500; }
+    .zoca-nav .nav-link { font-family: var(--sc) !important; font-size: 17px; letter-spacing: 0.1em; color: rgba(245,240,224,0.85); }
+    .zoca-nav .nav-link:hover { color: #fff; }
+    .zoca-nav .lang-btn { font-family: var(--sc) !important; letter-spacing: .1em; border-radius: 0; border-color: rgba(245,240,224,0.5); color: var(--cream); font-size: 15px; }
+    .zoca-nav .nav-link { white-space: nowrap; }
+    .zoca-nav .nav-links { gap: 22px; }
+    @media (max-width: 1180px) { .zoca-nav .nav-link { font-size: 15px; letter-spacing: .06em; } .zoca-nav .nav-links { gap: 16px; } }
+    .zoca-nav.solid { background: var(--green-900); border-bottom-color: transparent; }
+
+    /* HERO */
+    .rc-hero { position: relative; height: 100vh; min-height: 640px; overflow: hidden; display: flex; align-items: center; justify-content: center; text-align: center; }
+    .rc-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .rc-hero-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,38,24,.55) 0%, rgba(20,38,24,.35) 40%, rgba(20,38,24,.7) 100%); }
+    .rc-hero-content { position: relative; color: var(--cream); padding: 0 24px; display: flex; flex-direction: column; align-items: center; }
+    .rc-crest { margin-bottom: 22px; }
+    .rc-hero-title { font-family: var(--sc) !important; font-size: clamp(72px, 12vw, 168px); font-weight: 400 !important; letter-spacing: 0.14em !important; line-height: .95; margin: 0; padding-left: .14em; }
+    .rc-hero-label { font-family: var(--sc); font-size: clamp(16px, 1.6vw, 22px); letter-spacing: .28em; margin-top: 18px; color: rgba(245,240,224,.85); }
+    .rc-hero-sub { font-style: italic; font-size: clamp(22px, 2.4vw, 32px); margin: 26px 0 40px; color: var(--cream); font-weight: 400; }
+    .rc-hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .rc-btn { font-family: var(--sc) !important; font-size: 17px; letter-spacing: .14em; padding: 14px 34px; border-radius: 0; border: 1px solid var(--cream); transition: all .25s; }
+    .rc-btn-light { background: var(--cream); color: var(--green-900); }
+    .rc-btn-light:hover { background: transparent; color: var(--cream); }
+    .rc-btn-ghost { background: transparent; color: var(--cream); }
+    .rc-btn-ghost:hover { background: var(--cream); color: var(--green-900); }
+
+    /* SHARED */
+    .rc-wrap { max-width: 1240px; margin: 0 auto; padding: 0 48px; }
+    .rc-title { font-family: var(--sc) !important; text-align: center; font-size: clamp(40px, 4.6vw, 64px); color: var(--forest); margin: 0 0 18px; }
+    .rc-title-light { color: var(--cream); }
+    .rc-intro { text-align: center; font-style: italic; font-size: clamp(20px, 1.8vw, 24px); color: var(--text-muted); max-width: 680px; margin: 0 auto 56px; line-height: 1.5; }
+
+    /* ABOUT CARDS */
+    .rc-about { background: var(--cream); padding: 120px 0 110px; }
+    .rc-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .rc-card { position: relative; aspect-ratio: 3 / 4; overflow: hidden; background: var(--green-800); }
+    .rc-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s ease; }
+    .rc-card:hover img { transform: scale(1.05); }
+    .rc-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(20,38,24,.82) 100%); }
+    .rc-card-text { position: absolute; left: 28px; right: 28px; bottom: 26px; z-index: 1; color: var(--cream); }
+    .rc-card-kicker { font-style: italic; font-size: 19px; opacity: .85; }
+    .rc-card-title { font-family: var(--sc); font-size: 34px; letter-spacing: .08em; margin-top: 2px; }
+
+    /* DARK SECTION */
+    .rc-dark { background: var(--green-900); color: var(--cream); padding: 110px 0 120px; }
+    .rc-stats { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(245,240,224,.2); border-bottom: 1px solid rgba(245,240,224,.2); margin: 40px 0 70px; }
+    .rc-stat { text-align: center; padding: 34px 20px; }
+    .rc-stat + .rc-stat { border-left: 1px solid rgba(245,240,224,.2); }
+    .rc-stat-num { font-family: var(--sc); font-size: 58px; line-height: 1; color: var(--gold); }
+    .rc-stat-label { font-style: italic; font-size: 18px; margin-top: 10px; color: rgba(245,240,224,.8); }
+    .rc-icons { display: grid; grid-template-columns: repeat(6, 1fr); gap: 28px; }
+    .rc-icon { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; font-family: var(--sc); font-size: 17px; letter-spacing: .06em; color: rgba(245,240,224,.92); }
+    .rc-icon svg { width: 52px; height: 52px; color: var(--cream); }
+
+    /* STEPS */
+    .rc-steps { background: var(--ivory); padding: 110px 0; border-bottom: 1px solid rgba(45,74,45,.12); }
+    .rc-step-row { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .rc-step { text-align: center; padding: 10px 30px; }
+    .rc-step + .rc-step { border-left: 1px solid rgba(45,74,45,.18); }
+    .rc-step-num { font-family: var(--sc); font-size: 54px; color: var(--gold); line-height: 1; }
+    .rc-step-name { font-family: var(--sc); font-size: 24px; letter-spacing: .06em; color: var(--forest); margin-top: 12px; }
+
+    /* EXISTING SECTIONS RESTYLE */
+    .section { padding-top: 110px; padding-bottom: 110px; }
+    .section-label, .section-title { text-align: center; }
+    .kit-card, .plan-card, .config-steps, .summary-card { border-radius: 2px !important; border-color: rgba(45,74,45,.18) !important; background: var(--ivory) !important; }
+    .kit-card.featured { border-color: var(--forest) !important; }
+    .kit-card.featured .kit-badge { color: var(--gold) !important; }
+    .kit-price, .plan-price { font-family: var(--sc) !important; color: var(--forest) !important; font-weight: 500 !important; }
+    .kit-btn, .form-submit, .summary-cta, .config-next, button[class*="next"] { border-radius: 0 !important; font-family: var(--sc) !important; letter-spacing: .12em !important; font-size: 16px !important; background: var(--forest) !important; color: var(--cream) !important; }
+    .kit-btn:hover, .form-submit:hover { background: var(--green-700) !important; }
+    .payment-note { border-radius: 0 !important; background: transparent !important; border-color: rgba(45,74,45,.25) !important; text-align: center; font-style: italic; }
+    .configurator-section { background: var(--cream-dark) !important; }
+    .summary-visual { background: var(--green-900) !important; }
+    .config-step.open > .config-step-header .config-step-num { background: var(--forest) !important; border-color: var(--forest) !important; }
+    .config-step.done > .config-step-header .config-step-num { background: var(--gold) !important; border-color: var(--gold) !important; }
+    .divider { display: none; }
+    #plans { background: var(--cream); }
+
+    /* ORDER: split with image */
+    .order-section { background: var(--ivory) !important; border: none !important; }
+    .order-inner { max-width: 1240px !important; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: stretch; padding: 110px 48px !important; }
+    .order-photo { position: relative; min-height: 520px; overflow: hidden; }
+    .order-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .order-photo-caption { position: absolute; left: 28px; bottom: 24px; color: var(--cream); font-style: italic; font-size: 22px; z-index: 1; }
+    .order-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(20,38,24,.75)); }
+    input, select, textarea { border-radius: 0 !important; background: #fff !important; font-size: 17px !important; }
+
+    /* FOOTER */
+    footer { background: var(--green-900); }
+    .footer-logo-text { font-family: var(--sc) !important; font-style: normal !important; letter-spacing: .18em; color: var(--cream) !important; }
+    .footer-logo-text span { display: none; }
+    .footer-copy { color: rgba(245,240,224,.6) !important; font-style: italic; font-size: 16px !important; }
+
+    #formBox .section-label { text-align: left; }
+    .config-header { text-align: center; }
+    .config-header p { font-style: italic; font-size: 20px; }
+    @media (max-width: 900px) {
+      .zoca-nav { padding: 0 20px; }
+      .zoca-nav .nav-link { display: none; }
+      .rc-wrap { padding: 0 20px; }
+      .rc-cards, .rc-stats, .rc-step-row { grid-template-columns: 1fr; }
+      .rc-stat + .rc-stat, .rc-step + .rc-step { border-left: none; border-top: 1px solid rgba(245,240,224,.2); }
+      .rc-step + .rc-step { border-top-color: rgba(45,74,45,.18); padding-top: 24px; }
+      .rc-icons { grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
+      .order-inner { grid-template-columns: 1fr; padding: 70px 20px !important; }
+      .order-photo { min-height: 320px; }
+      .rc-about, .rc-dark, .rc-steps { padding: 80px 0; }
+    }
+
+  
+    /* ===== NOTION CONTENT SECTIONS ===== */
+    .rc-kicker { font-family: var(--sc); text-align: center; color: var(--gold); letter-spacing: .16em; font-size: 17px; margin-bottom: 10px; }
+    .rc-left { text-align: left !important; }
+    .rc-center { text-align: center; }
+    .rc-mt { margin-top: 70px; }
+    .rc-intro-light { color: rgba(245,240,224,.82); }
+    .rc-light { background: var(--cream); padding: 110px 0; }
+    .rc-ivory { background: var(--ivory); padding: 110px 0; }
+    .rc-dark-slim { padding: 100px 0; }
+    .rc-dark-text { max-width: 820px; margin: 0 auto 18px; text-align: center; font-size: 20px; line-height: 1.6; color: rgba(245,240,224,.88); }
+    .rc-dark-small { font-style: italic; font-size: 18px; color: rgba(245,240,224,.7); margin-bottom: 70px; }
+    .rc-sources { max-width: 820px; margin: 30px auto 0; text-align: center; font-size: 14px; font-style: italic; color: rgba(245,240,224,.5); }
+    .rc-stats-4 { grid-template-columns: repeat(4, 1fr); }
+    .rc-stats-4 .rc-stat-num { font-size: 48px; }
+    .rc-two { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .rc-two-top { align-items: start; }
+    .rc-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 48px; max-width: 980px; margin: 0 auto; }
+    .rc-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+    .rc-body { font-size: 19px; line-height: 1.65; color: var(--text); margin: 0 0 16px; }
+    .rc-muted { color: var(--text-muted); font-style: italic; }
+    .rc-h3 { font-family: var(--sc) !important; font-size: 26px; letter-spacing: .06em; color: var(--forest); margin: 0 0 18px; font-weight: 500; }
+    .rc-list { margin: 0; padding: 0; list-style: none; counter-reset: r; }
+    .rc-list li { counter-increment: r; position: relative; padding: 18px 0 18px 56px; border-top: 1px solid rgba(45,74,45,.16); font-size: 19px; line-height: 1.5; }
+    .rc-list li:last-child { border-bottom: 1px solid rgba(45,74,45,.16); }
+    .rc-list li::before { content: counter(r, upper-roman); position: absolute; left: 0; top: 16px; font-family: var(--sc); color: var(--gold); font-size: 24px; }
+    .rc-table-wrap { overflow-x: auto; margin-bottom: 20px; }
+    .rc-table { width: 100%; border-collapse: collapse; font-size: 17px; }
+    .rc-table th { font-family: var(--sc); font-weight: 500; letter-spacing: .08em; text-align: left; color: var(--gold); font-size: 16px; padding: 10px 12px; border-bottom: 1px solid var(--forest); }
+    .rc-table td { padding: 11px 12px; border-bottom: 1px solid rgba(45,74,45,.14); vertical-align: top; }
+    .rc-plans th, .rc-plans td { text-align: center; }
+    .rc-plans th:first-child, .rc-plans td:first-child { text-align: left; }
+    .rc-plans th { font-size: 22px; color: var(--forest); }
+    .rc-plans tr:first-child td { font-family: var(--sc); font-size: 26px; color: var(--forest); }
+    .rc-yes { color: var(--forest); font-size: 18px; }
+    .rc-no { color: rgba(45,74,45,.35); }
+    .rc-note { text-align: center; font-style: italic; color: var(--text-muted); margin-top: 18px; }
+    .rc-callout { border-left: 1px solid var(--gold); padding: 6px 0 6px 32px; }
+    .rc-app-row { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(45,74,45,.18); border-bottom: 1px solid rgba(45,74,45,.18); }
+    .rc-app-card { padding: 30px 24px; text-align: center; }
+    .rc-app-card + .rc-app-card { border-left: 1px solid rgba(45,74,45,.18); }
+    .rc-app-num { font-family: var(--sc); color: var(--gold); font-size: 22px; }
+    .rc-app-name { font-family: var(--sc); font-size: 24px; color: var(--forest); margin: 6px 0; letter-spacing: .05em; }
+    .rc-app-desc { font-style: italic; color: var(--text-muted); font-size: 17px; }
+    .rc-quote { margin: 60px auto 0; max-width: 860px; text-align: center; font-style: italic; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.4; color: var(--forest); border-top: 1px solid rgba(45,74,45,.2); border-bottom: 1px solid rgba(45,74,45,.2); padding: 34px 10px; }
+    .rc-block .rc-table-wrap { margin-bottom: 22px; }
+    .kits-grid-4 { grid-template-columns: repeat(4, 1fr) !important; gap: 16px !important; }
+    .kits-grid-4 .kit-body { padding: 26px 22px 22px; }
+    .kits-grid-4 .kit-price { font-size: 34px !important; }
+    .kits-grid-4 .kit-btn { align-self: stretch; text-align: center; }
+    .rc-details { margin-top: 28px; border-top: 1px solid rgba(45,74,45,.2); border-bottom: 1px solid rgba(45,74,45,.2); }
+    .rc-details summary, .rc-faq summary { cursor: pointer; list-style: none; font-family: var(--sc); letter-spacing: .08em; color: var(--forest); font-size: 20px; padding: 18px 0; position: relative; }
+    .rc-details summary::-webkit-details-marker, .rc-faq summary::-webkit-details-marker { display: none; }
+    .rc-details summary::after, .rc-faq summary::after { content: '+'; position: absolute; right: 4px; top: 14px; font-family: var(--serif); font-size: 26px; color: var(--gold); }
+    .rc-details[open] summary::after, .rc-faq[open] summary::after { content: '\2013'; }
+    .rc-details .rc-table-wrap { padding-bottom: 10px; }
+    .rc-narrow { max-width: 860px; }
+    .rc-faq { border-top: 1px solid rgba(45,74,45,.18); }
+    .rc-faq:last-of-type { border-bottom: 1px solid rgba(45,74,45,.18); }
+    .rc-faq summary { padding-right: 40px; }
+    .rc-faq p { margin: 0 0 22px; font-size: 19px; line-height: 1.65; color: var(--text-muted); }
+    .rc-closing { background: var(--green-900); color: var(--cream); text-align: center; padding: 110px 0 100px; border-bottom: 1px solid rgba(245,240,224,.12); }
+    .rc-closing-name { font-family: var(--sc); font-size: clamp(64px, 9vw, 120px); letter-spacing: .14em; line-height: 1; padding-left: .14em; }
+    .rc-terms { background: var(--green-900); border-top: 1px solid rgba(245,240,224,.12); }
+    .rc-terms summary { cursor: pointer; list-style: none; padding: 22px 0; font-family: var(--sc); letter-spacing: .12em; font-size: 16px; color: rgba(245,240,224,.75); }
+    .rc-terms summary::-webkit-details-marker { display: none; }
+    .rc-terms summary::after { content: '+'; margin-left: 10px; color: var(--gold); }
+    .rc-terms details[open] summary::after { content: '\2013'; }
+    .rc-terms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px 40px; padding: 6px 0 36px; }
+    .rc-term-h { font-family: var(--sc); letter-spacing: .08em; color: var(--cream); font-size: 16px; margin-bottom: 4px; }
+    .rc-term p { margin: 0; font-size: 15px; line-height: 1.55; color: rgba(245,240,224,.6); }
+    @media (max-width: 900px) { .rc-terms-grid { grid-template-columns: 1fr; } }
+    .rc-closing-mark { margin-bottom: 18px; }
+    .zoca-logo { gap: 12px !important; }
+    .rc-closing p { font-style: italic; font-size: clamp(22px, 2.2vw, 30px); max-width: 760px; margin: 26px auto 0; color: rgba(245,240,224,.85); }
+    .summary-monthly { font-size: 16px !important; margin-top: 4px; }
+    #summary-note { font-style: italic; color: var(--text-muted); font-size: 14px !important; }
+    .config-opt-detail { font-size: 14px; line-height: 1.35; }
+    .config-opt-name { font-family: var(--sc); font-size: 20px; letter-spacing: .04em; }
+    .config-opt { border-radius: 0 !important; }
+
+    .rc-open { font-family: var(--sc) !important; letter-spacing: .12em; font-size: 16px; padding: 12px 28px; border: 1px solid var(--forest); background: transparent; color: var(--forest); border-radius: 0; transition: all .2s; margin-top: 8px; }
+    .rc-open:hover { background: var(--forest); color: var(--cream); }
+    .rc-open-light { border-color: var(--cream); color: var(--cream); }
+    .rc-open-light:hover { background: var(--cream); color: var(--green-900); }
+    .rc-link { background: none; border: none; padding: 0; color: var(--gold); font-family: var(--serif) !important; font-style: italic; font-size: 17px; text-decoration: underline; text-underline-offset: 3px; align-self: flex-start; }
+    .rc-link:hover { color: var(--forest); }
+    .kit-card .rc-link { margin-top: auto; margin-bottom: 4px; }
+    .kit-card .kit-btn { margin-top: 8px !important; }
+    .rc-mt-sm { margin-top: 28px; }
+    button.rc-app-card { background: transparent; border: none; cursor: pointer; transition: background .2s; }
+    button.rc-app-card:hover { background: var(--ivory); }
+    .rc-app-more { margin-top: 12px; font-style: italic; color: var(--gold); font-size: 16px; }
+    .rc-modal { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(20,38,24,.6); align-items: center; justify-content: center; padding: 24px; }
+    .rc-modal.open { display: flex; animation: rcfade .2s ease; }
+    @keyframes rcfade { from { opacity: 0 } to { opacity: 1 } }
+    .rc-modal-box { position: relative; background: var(--ivory); max-width: 680px; width: 100%; max-height: 86vh; overflow-y: auto; padding: 48px 48px 40px; border-top: 3px solid var(--gold); }
+    .rc-modal-x { position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 32px; line-height: 1; color: var(--forest); }
+    .rc-modal-title { font-family: var(--sc) !important; font-size: 34px; color: var(--forest); margin: 0 0 22px; letter-spacing: .06em; font-weight: 500; }
+    .rc-modal-price { font-family: var(--sc); font-size: 30px; color: var(--gold); margin: -10px 0 18px; }
+    .rc-modal .rc-list li { font-size: 17px; }
+    .rc-checks { list-style: none; padding: 0; margin: 0 0 18px; }
+    .rc-checks li { padding: 10px 0 10px 28px; border-bottom: 1px solid rgba(45,74,45,.14); position: relative; font-size: 18px; }
+    .rc-checks li::before { content: ''; position: absolute; left: 4px; top: 18px; width: 10px; height: 5px; border-left: 1.5px solid var(--forest); border-bottom: 1.5px solid var(--forest); transform: rotate(-45deg); }
+    .rc-h4 { font-family: var(--sc); font-size: 20px; color: var(--forest); margin: 22px 0 6px; font-weight: 500; letter-spacing: .05em; }
+    .rc-h4:first-of-type { margin-top: 0; }
+    .rc-terms { background: var(--cream-dark); border-top: 1px solid rgba(45,74,45,.15); }
+    .rc-terms-row { display: flex; flex-wrap: wrap; gap: 14px 40px; align-items: center; justify-content: center; padding-top: 26px; padding-bottom: 26px; }
+    .rc-terms-item { font-size: 16px; color: var(--text-muted); }
+    .rc-terms-item strong { font-family: var(--sc); font-weight: 500; color: var(--forest); letter-spacing: .06em; margin-right: 6px; }
+    @media (max-width: 600px) { .rc-modal-box { padding: 40px 22px 28px; } }
+
+    .rc-page { display: none; }
+    .rc-page.active { display: block; animation: rcfade .25s ease; }
+    body:not(.is-home) .rc-page.active { padding-top: 76px; }
+    .zoca-nav .nav-link { text-decoration: none; white-space: nowrap; }
+    .zoca-nav .nav-link.current { color: #fff; border-bottom: 1px solid var(--gold); padding-bottom: 2px; }
+    .nav-links { gap: 26px !important; }
+    .rc-tiles { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(45,74,45,.18); border-left: 1px solid rgba(45,74,45,.18); }
+    .rc-tile { display: block; text-decoration: none; color: inherit; padding: 34px 30px; border-right: 1px solid rgba(45,74,45,.18); border-bottom: 1px solid rgba(45,74,45,.18); transition: background .2s; }
+    .rc-tile:hover { background: var(--cream); }
+    .rc-tile-num { font-family: var(--sc); color: var(--gold); font-size: 20px; }
+    .rc-tile-name { font-family: var(--sc); font-size: 28px; color: var(--forest); letter-spacing: .05em; margin: 6px 0 8px; }
+    .rc-tile-desc { font-style: italic; color: var(--text-muted); font-size: 18px; line-height: 1.45; }
+    .rc-tile-go { margin-top: 16px; font-family: var(--sc); color: var(--forest); letter-spacing: .1em; font-size: 15px; }
+    @media (max-width: 1200px) { .zoca-nav .nav-link { font-size: 15px !important; } .nav-links { gap: 18px !important; } }
+    @media (max-width: 900px) { .rc-tiles { grid-template-columns: 1fr; } }
+    @media (max-width: 1100px) {
+      .kits-grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
+      .rc-stats-4 { grid-template-columns: repeat(2, 1fr); }
+      .rc-stats-4 .rc-stat:nth-child(3) { border-left: none; }
+    }
+    @media (max-width: 900px) {
+      .rc-two, .rc-grid-2, .rc-grid-3 { grid-template-columns: 1fr; gap: 40px; }
+      .rc-app-row { grid-template-columns: 1fr 1fr; }
+      .rc-app-card + .rc-app-card { border-left: none; }
+      .rc-light, .rc-ivory { padding: 80px 0; }
+    }
+    @media (max-width: 600px) {
+      .kits-grid-4, .rc-stats-4, .rc-app-row { grid-template-columns: 1fr !important; }
+      .rc-stats-4 .rc-stat { border-left: none !important; }
+    }
+
+  </style>
+</head>
+<body class="is-home">
+
+<!-- NAV -->
+<nav class="zoca-nav" id="zocaNav">
+  <a class="zoca-logo" href="#inicio">
+    <svg width="30" height="30" viewBox="66 40 44 58" fill="none" stroke="#F5F0E0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M70 92h36"/><path d="M76 92v-10h24v10"/><path d="M76 82l4-3h16l4 3"/><path d="M88 79V50"/><path d="M88 62c-10 0-16-6-16-14 9 0 16 5 16 14z"/><path d="M88 56c10 0 16-6 16-14-9 0-16 5-16 14z"/></svg>
+    <div class="logo-wordmark">Zoca</div>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="#inicio"><span data-lang-inline="es" class="active">Inicio</span><span data-lang-inline="en">Home</span></a>
+    <a class="nav-link" href="#producto"><span data-lang-inline="es" class="active">Producto</span><span data-lang-inline="en">Product</span></a>
+    <a class="nav-link" href="#kits"><span data-lang-inline="es" class="active">Kits</span><span data-lang-inline="en">Kits</span></a>
+    <a class="nav-link" href="#configurador"><span data-lang-inline="es" class="active">Arma tu kit</span><span data-lang-inline="en">Build your kit</span></a>
+    <a class="nav-link" href="#membresias"><span data-lang-inline="es" class="active">Membresías</span><span data-lang-inline="en">Memberships</span></a>
+    <a class="nav-link" href="#preguntas"><span data-lang-inline="es" class="active">Preguntas</span><span data-lang-inline="en">FAQ</span></a>
+    <a class="nav-link" href="#contacto"><span data-lang-inline="es" class="active">Contacto</span><span data-lang-inline="en">Contact</span></a>
+    <button class="lang-btn" id="langBtn" onclick="toggleLang()">English</button>
+  </div>
+</nav>
+
+
+<main class="rc-page" data-page="inicio">
+<!-- HERO -->
+<header class="rc-hero">
+  <img class="rc-hero-img" src="img/hero.jpg" alt="">
+  <div class="rc-hero-shade"></div>
+  <div class="rc-hero-content">
+    <svg class="rc-crest" width="84" height="84" viewBox="66 40 44 58" fill="none" stroke="#F5F0E0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M70 92h36"/><path d="M76 92v-10h24v10"/><path d="M76 82l4-3h16l4 3"/><path d="M88 79V50"/><path d="M88 62c-10 0-16-6-16-14 9 0 16 5 16 14z"/><path d="M88 56c10 0 16-6 16-14-9 0-16 5-16 14z"/></svg>
+    <h1 class="rc-hero-title">Zoca</h1>
+    <div class="rc-hero-label">
+      <span data-lang="es" class="active">Refrigeración modular para el campo</span>
+      <span data-lang="en">Modular cold storage for small farmers</span>
+    </div>
+    <p class="rc-hero-sub">
+      <span data-lang="es" class="active">Conserva tu cosecha. Recupera lo que pierdes.</span>
+      <span data-lang="en">Save your harvest. Recover what you lose.</span>
+    </p>
+    <div class="rc-hero-ctas">
+      <button class="rc-btn rc-btn-light" onclick="goTo('configurador')">
+        <span data-lang-inline="es" class="active">Arma tu kit</span>
+        <span data-lang-inline="en">Build your kit</span>
+      </button>
+      <button class="rc-btn rc-btn-ghost" onclick="goTo('kits')">
+        <span data-lang-inline="es" class="active">Ver precios</span>
+        <span data-lang-inline="en">See pricing</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- SOBRE ZOCA: 3 PHOTO CARDS -->
+<section class="rc-about" id="sobre">
+  <div class="rc-wrap">
+    <h2 class="rc-title">
+      <span data-lang="es" class="active">Sobre Zoca</span>
+      <span data-lang="en">About Zoca</span>
+    </h2>
+    <p class="rc-intro">
+      <span data-lang="es" class="active">Zoca es el rebrote que sale del tallo después de la cosecha. Lo que vuelve a crecer. Lo que permanece firme en la tierra. No salvamos solo la cosecha de hoy: le damos al agricultor la infraestructura para que la cosecha de mañana no se pierda tampoco.</span>
+      <span data-lang="en">Zoca is the regrowth that sprouts from the stem after the harvest. What grows back. What stays firm in the ground. We do not just save today's harvest: we give farmers the infrastructure so tomorrow's harvest is not lost either.</span>
+    </p>
+    <div class="rc-cards">
+      <article class="rc-card">
+        <img src="img/card-campo.jpg" alt="">
+        <div class="rc-card-text">
+          <div class="rc-card-kicker">
+            <span data-lang-inline="es" class="active">La finca</span>
+            <span data-lang-inline="en">The farm</span>
+          </div>
+          <div class="rc-card-title">
+            <span data-lang-inline="es" class="active">Cosecha</span>
+            <span data-lang-inline="en">Harvest</span>
+          </div>
+        </div>
+      </article>
+      <article class="rc-card">
+        <img src="img/card-postcosecha.jpg" alt="">
+        <div class="rc-card-text">
+          <div class="rc-card-kicker">
+            <span data-lang-inline="es" class="active">Donde se pierde</span>
+            <span data-lang-inline="en">Where it is lost</span>
+          </div>
+          <div class="rc-card-title">
+            <span data-lang-inline="es" class="active">Postcosecha</span>
+            <span data-lang-inline="en">Post-harvest</span>
+          </div>
+        </div>
+      </article>
+      <article class="rc-card">
+        <img src="img/card-fresco.jpg" alt="">
+        <div class="rc-card-text">
+          <div class="rc-card-kicker">
+            <span data-lang-inline="es" class="active">Con Zoca</span>
+            <span data-lang-inline="en">With Zoca</span>
+          </div>
+          <div class="rc-card-title">
+            <span data-lang-inline="es" class="active">Llega fresco</span>
+            <span data-lang-inline="en">Arrives fresh</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- RESUMEN -->
+<section class="rc-ivory" id="resumen">
+  <div class="rc-wrap">
+    <div class="rc-kicker"><span data-lang-inline="es" class="active">Explora</span><span data-lang-inline="en">Explore</span></div>
+    <h2 class="rc-title"><span data-lang="es" class="active">Todo sobre Zoca</span><span data-lang="en">Everything about Zoca</span></h2>
+    <div class="rc-tiles"><a class="rc-tile" href="#producto"><div class="rc-tile-num">01</div><div class="rc-tile-name"><span data-lang-inline="es" class="active">El producto</span><span data-lang-inline="en">The product</span></div><div class="rc-tile-desc"><span data-lang-inline="es" class="active">Cuarto frío modular con sensores y app de monitoreo.</span><span data-lang-inline="en">Modular cold room with sensors and a monitoring app.</span></div><div class="rc-tile-go"><span data-lang-inline="es" class="active">Ver</span><span data-lang-inline="en">View</span> &rarr;</div></a><a class="rc-tile" href="#kits"><div class="rc-tile-num">02</div><div class="rc-tile-name"><span data-lang-inline="es" class="active">Kits y precios</span><span data-lang-inline="en">Kits and prices</span></div><div class="rc-tile-desc"><span data-lang-inline="es" class="active">Cuatro tamaños desde $550 USD, con plan de 12 meses o en cooperativa.</span><span data-lang-inline="en">Four sizes from $550 USD, with a 12-month plan or through a cooperative.</span></div><div class="rc-tile-go"><span data-lang-inline="es" class="active">Ver</span><span data-lang-inline="en">View</span> &rarr;</div></a><a class="rc-tile" href="#configurador"><div class="rc-tile-num">03</div><div class="rc-tile-name"><span data-lang-inline="es" class="active">Arma tu kit</span><span data-lang-inline="en">Build your kit</span></div><div class="rc-tile-desc"><span data-lang-inline="es" class="active">Elige tamaño, compra, pago y membresía y mira el total al instante.</span><span data-lang-inline="en">Choose size, purchase, payment and membership and see the total instantly.</span></div><div class="rc-tile-go"><span data-lang-inline="es" class="active">Ver</span><span data-lang-inline="en">View</span> &rarr;</div></a><a class="rc-tile" href="#membresias"><div class="rc-tile-num">04</div><div class="rc-tile-name"><span data-lang-inline="es" class="active">Membresías</span><span data-lang-inline="en">Memberships</span></div><div class="rc-tile-desc"><span data-lang-inline="es" class="active">Básico, Pro y Cooperativa: monitoreo, alertas e historial.</span><span data-lang-inline="en">Basic, Pro and Cooperative: monitoring, alerts and history.</span></div><div class="rc-tile-go"><span data-lang-inline="es" class="active">Ver</span><span data-lang-inline="en">View</span> &rarr;</div></a><a class="rc-tile" href="#preguntas"><div class="rc-tile-num">05</div><div class="rc-tile-name"><span data-lang-inline="es" class="active">Preguntas frecuentes</span><span data-lang-inline="en">FAQ</span></div><div class="rc-tile-desc"><span data-lang-inline="es" class="active">Armado, temperatura, alertas, internet y más.</span><span data-lang-inline="en">Assembly, temperature, alerts, internet and more.</span></div><div class="rc-tile-go"><span data-lang-inline="es" class="active">Ver</span><span data-lang-inline="en">View</span> &rarr;</div></a><a class="rc-tile" href="#contacto"><div class="rc-tile-num">06</div><div class="rc-tile-name"><span data-lang-inline="es" class="active">Contáctanos</span><span data-lang-inline="en">Contact us</span></div><div class="rc-tile-desc"><span data-lang-inline="es" class="active">Cuéntanos qué necesitas y te respondemos en 48 horas.</span><span data-lang-inline="en">Tell us what you need and we reply within 48 hours.</span></div><div class="rc-tile-go"><span data-lang-inline="es" class="active">Ver</span><span data-lang-inline="en">View</span> &rarr;</div></a></div>
+  </div>
+</section>
+<!-- CIERRE -->
+<section class="rc-closing">
+  <div class="rc-wrap">
+    <div class="rc-closing-mark"><svg width="72" height="72" viewBox="66 40 44 58" fill="none" stroke="#F5F0E0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M70 92h36"/><path d="M76 92v-10h24v10"/><path d="M76 82l4-3h16l4 3"/><path d="M88 79V50"/><path d="M88 62c-10 0-16-6-16-14 9 0 16 5 16 14z"/><path d="M88 56c10 0 16-6 16-14-9 0-16 5-16 14z"/></svg></div>
+    <div class="rc-closing-name">Zoca</div>
+    <p><span data-lang="es" class="active">El agricultor ya sabe cómo cosechar. Nosotros le damos un lugar donde guardar lo que cosechó.</span><span data-lang="en">Farmers already know how to harvest. We give them a place to keep what they harvested.</span></p>
+  </div>
+</section>
+
+
+
+</main>
+
+<main class="rc-page" data-page="producto">
+<!-- EL PROBLEMA -->
+<section class="rc-dark" id="problema">
+  <div class="rc-wrap">
+    <div class="rc-kicker"><span data-lang-inline="es" class="active">El problema</span><span data-lang-inline="en">The problem</span></div>
+<h2 class="rc-title rc-title-light"><span data-lang="es" class="active">La cosecha se pierde en la finca</span><span data-lang="en">The harvest is lost on the farm</span></h2>
+<p class="rc-intro rc-intro-light"><span data-lang="es" class="active">El agricultor cosecha el lunes. Si no vende el martes, ya no puede vender el miércoles. En 24 a 48 horas sin temperatura controlada, una cosecha de mora, tomate o fresa pasa de vendible a pérdida.</span><span data-lang="en">The farmer harvests on Monday. If they do not sell on Tuesday, they cannot sell on Wednesday. In 24 to 48 hours without temperature control, a harvest of blackberries, tomatoes or strawberries goes from sellable to lost.</span></p>
+
+    <div class="rc-stats rc-stats-4">
+      <div class="rc-stat"><div class="rc-stat-num">9.76 M</div><div class="rc-stat-label"><span data-lang="es" class="active">toneladas de alimentos que pierde Colombia al año</span><span data-lang="en">tons of food Colombia loses every year</span></div></div>
+      <div class="rc-stat"><div class="rc-stat-num">34%</div><div class="rc-stat-label"><span data-lang="es" class="active">de la producción nacional</span><span data-lang="en">of national production</span></div></div>
+      <div class="rc-stat"><div class="rc-stat-num">58%</div><div class="rc-stat-label"><span data-lang="es" class="active">de esas pérdidas son frutas y verduras</span><span data-lang="en">of those losses are fruits and vegetables</span></div></div>
+      <div class="rc-stat"><div class="rc-stat-num">24–48 h</div><div class="rc-stat-label"><span data-lang="es" class="active">sin frío para que la cosecha se pierda</span><span data-lang="en">without cold for a harvest to be lost</span></div></div>
+    </div>
+    <p class="rc-dark-text"><span data-lang="es" class="active">La causa principal no es falta de producción. Es que no hay cadena de frío en el primer eslabón: la finca. Los camiones refrigerados y los supermercados ya tienen solución. Lo que no existe es almacenamiento accesible en la finca para el pequeño agricultor.</span><span data-lang="en">The main cause is not a lack of production. It is the missing cold chain at the first link: the farm. Refrigerated trucks and supermarkets already have a solution. What does not exist is affordable on-farm storage for the small farmer.</span></p>
+    <div class="rc-center rc-mt-sm"><button class="rc-open rc-open-light" onclick="openModal('colombia')"><span data-lang-inline="es" class="active">Dónde empezamos</span><span data-lang-inline="en">Where we start</span></button></div>
+    <div class="rc-icons rc-mt">
+      <div class="rc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="8" y="8" width="32" height="32" rx="2"/><path d="M8 16h32M8 24h32M8 32h32"/><path d="M16 8v32M24 8v32M32 8v32" opacity=".4"/></svg><div><span data-lang-inline="es" class="active">Lana de roca basáltica</span><span data-lang-inline="en">Basalt rock wool</span></div></div>
+      <div class="rc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M20 6h8v24h-8z"/><circle cx="24" cy="34" r="7"/><path d="M31 12h4M31 18h4M31 24h4"/></svg><div><span data-lang-inline="es" class="active">Temperatura y humedad</span><span data-lang-inline="en">Temperature and humidity</span></div></div>
+      <div class="rc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M24 40c-8 0-13-6-13-13 0-9 8-14 13-21 5 7 13 12 13 21 0 7-5 13-13 13z"/><path d="M24 18v22"/><path d="M24 26l-5-4M24 32l6-5"/></svg><div><span data-lang-inline="es" class="active">Sensor de etileno incluido</span><span data-lang-inline="en">Ethylene sensor included</span></div></div>
+      <div class="rc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="14" y="4" width="20" height="40" rx="3"/><path d="M21 38h6"/><path d="M19 16a7 7 0 0 1 10 0M21.5 19.5a3.5 3.5 0 0 1 5 0"/><circle cx="24" cy="23" r="1"/></svg><div><span data-lang-inline="es" class="active">Alertas en el celular</span><span data-lang-inline="en">Alerts on your phone</span></div></div>
+      <div class="rc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 14h24v18H4zM28 20h9l7 7v5H28z"/><circle cx="12" cy="35" r="4"/><circle cx="36" cy="35" r="4"/></svg><div><span data-lang-inline="es" class="active">Envío a tu finca</span><span data-lang-inline="en">Shipped to your farm</span></div></div>
+      <div class="rc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="10" width="36" height="32" rx="2"/><path d="M6 18h36M15 6v8M33 6v8"/><path d="M14 26h4M22 26h4M30 26h4M14 33h4M22 33h4"/></svg><div><span data-lang-inline="es" class="active">Plan de pago a 12 meses</span><span data-lang-inline="en">12-month payment plan</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EL PRODUCTO -->
+<section class="rc-ivory" id="producto">
+  <div class="rc-wrap">
+    <div class="rc-kicker"><span data-lang-inline="es" class="active">El producto</span><span data-lang-inline="en">The product</span></div>
+<h2 class="rc-title"><span data-lang="es" class="active">Un cuarto frío que armas tú</span><span data-lang="en">A cold room you assemble yourself</span></h2>
+<p class="rc-intro"><span data-lang="es" class="active">Zoca es un kit modular de paneles de lana de roca basáltica. Los paneles encajan entre sí sin tornillos ni herramienta especializada, caben en una camioneta y una persona puede cargar uno sola. Si se daña uno, se reemplaza solo ese.</span><span data-lang="en">Zoca is a modular kit of basalt rock wool panels. Panels lock together without screws or specialized tools, fit in a pickup truck and one person can carry one alone. If one gets damaged, only that one is replaced.</span></p>
+
+    <div class="rc-center"><button class="rc-open" onclick="openModal('panel')"><span data-lang-inline="es" class="active">Ver medidas del panel</span><span data-lang-inline="en">See panel specs</span></button></div>
+  </div>
+</section>
+
+<!-- IOT + APP -->
+<section class="rc-light" id="iot">
+  <div class="rc-wrap">
+    <div class="rc-kicker"><span data-lang-inline="es" class="active">Sistema IoT</span><span data-lang-inline="en">IoT system</span></div>
+<h2 class="rc-title"><span data-lang="es" class="active">Cada cámara sabe lo que pasa adentro</span><span data-lang="en">Every chamber knows what happens inside</span></h2>
+<p class="rc-intro"><span data-lang="es" class="active">Cada cámara trae un módulo con sensores de temperatura, humedad, CO2, etileno y apertura de puerta. Cuando algo se sale de rango, te llega una alerta al celular.</span><span data-lang="en">Every chamber comes with a sensor module for temperature, humidity, CO2, ethylene and door opening. When something goes out of range, you get an alert on your phone.</span></p>
+
+    <div class="rc-two rc-two-top">
+      <div class="rc-callout">
+        <h3 class="rc-h3"><span data-lang="es" class="active">Por qué el etileno</span><span data-lang="en">Why ethylene</span></h3>
+        <p class="rc-body"><span data-lang="es" class="active">Las frutas sueltan etileno cuando empiezan a madurar. El sensor lo detecta 6 horas antes de que se note a simple vista, así tienes tiempo de vender o mover la cosecha antes de que se pase.</span><span data-lang="en">Fruit releases ethylene when it starts to ripen. The sensor detects it 6 hours before it is visible, so you have time to sell or move the harvest before it spoils.</span></p>
+      </div>
+      <div class="rc-callout">
+        <h3 class="rc-h3"><span data-lang="es" class="active">Sin internet, sin problema</span><span data-lang="en">No internet, no problem</span></h3>
+        <p class="rc-body"><span data-lang="es" class="active">El módulo guarda los datos hasta por 72 horas y los sincroniza cuando vuelve la conexión.</span><span data-lang="en">The module stores data for up to 72 hours and syncs when the connection returns.</span></p>
+        <button class="rc-open" onclick="openModal('sensores')"><span data-lang-inline="es" class="active">Ver todos los sensores</span><span data-lang-inline="en">See all sensors</span></button>
+      </div>
+    </div>
+    <h3 class="rc-h3 rc-center rc-mt"><span data-lang="es" class="active">La app viene incluida con tu kit</span><span data-lang="en">The app comes with your kit</span></h3>
+    <p class="rc-intro"><span data-lang="es" class="active">Con tu membresía tienes acceso a la app de monitoreo. Así se ve por dentro:</span><span data-lang="en">Your membership gives you access to the monitoring app. This is what is inside:</span></p>
+    <div class="rc-app-row"><button class="rc-app-card" onclick="openModal('app-dash')"><div class="rc-app-num">01</div><div class="rc-app-name"><span data-lang-inline="es" class="active">Dashboard</span><span data-lang-inline="en">Dashboard</span></div><div class="rc-app-desc"><span data-lang-inline="es" class="active">Cómo está tu cámara ahora</span><span data-lang-inline="en">How your chamber is doing now</span></div><div class="rc-app-more"><span data-lang-inline="es" class="active">Ver más</span><span data-lang-inline="en">See more</span></div></button><button class="rc-app-card" onclick="openModal('app-sens')"><div class="rc-app-num">02</div><div class="rc-app-name"><span data-lang-inline="es" class="active">Sensores</span><span data-lang-inline="en">Sensors</span></div><div class="rc-app-desc"><span data-lang-inline="es" class="active">El detalle de cada medición</span><span data-lang-inline="en">The detail of each reading</span></div><div class="rc-app-more"><span data-lang-inline="es" class="active">Ver más</span><span data-lang-inline="en">See more</span></div></button><button class="rc-app-card" onclick="openModal('app-alert')"><div class="rc-app-num">03</div><div class="rc-app-name"><span data-lang-inline="es" class="active">Alertas</span><span data-lang-inline="en">Alerts</span></div><div class="rc-app-desc"><span data-lang-inline="es" class="active">Todo lo que ha pasado</span><span data-lang-inline="en">Everything that has happened</span></div><div class="rc-app-more"><span data-lang-inline="es" class="active">Ver más</span><span data-lang-inline="en">See more</span></div></button><button class="rc-app-card" onclick="openModal('app-kit')"><div class="rc-app-num">04</div><div class="rc-app-name"><span data-lang-inline="es" class="active">Mi Kit</span><span data-lang-inline="en">My Kit</span></div><div class="rc-app-desc"><span data-lang-inline="es" class="active">Tu equipo y tu licencia</span><span data-lang-inline="en">Your equipment and license</span></div><div class="rc-app-more"><span data-lang-inline="es" class="active">Ver más</span><span data-lang-inline="en">See more</span></div></button></div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="rc-steps" id="como">
+  <div class="rc-wrap">
+    <div class="rc-kicker"><span data-lang-inline="es" class="active">Cómo funciona</span><span data-lang-inline="en">How it works</span></div>
+<h2 class="rc-title"><span data-lang="es" class="active">De la finca al frío en tres pasos</span><span data-lang="en">From farm to cold in three steps</span></h2>
+
+    <div class="rc-step-row">
+      <div class="rc-step"><div class="rc-step-num">I</div><div class="rc-step-name"><span data-lang-inline="es" class="active">Configuras y pides</span><span data-lang-inline="en">Configure and order</span></div></div>
+      <div class="rc-step"><div class="rc-step-num">II</div><div class="rc-step-name"><span data-lang-inline="es" class="active">Te lo enviamos y lo armas</span><span data-lang-inline="en">We ship it, you assemble it</span></div></div>
+      <div class="rc-step"><div class="rc-step-num">III</div><div class="rc-step-name"><span data-lang-inline="es" class="active">Monitoreas desde el celular</span><span data-lang-inline="en">Monitor from your phone</span></div></div>
+    </div>
+  </div>
+</section>
+
+
+</main>
+
+<main class="rc-page" data-page="kits">
+<!-- KITS -->
+<section class="section" id="kits">
+  <div class="section-label"><span data-lang="es" class="active">Kits de refrigeración</span><span data-lang="en">Cold storage kits</span></div>
+  <div class="section-title"><span data-lang="es" class="active">El kit correcto para tu finca</span><span data-lang="en">The right kit for your farm</span></div>
+  <div class="kits-grid kits-grid-4">
+      <div class="kit-card">
+        <div class="kit-body">
+          <div class="kit-badge"><span data-lang-inline="es" class="active">Para empezar</span><span data-lang-inline="en">Entry level</span></div>
+          <div class="kit-name"><span data-lang-inline="es" class="active">Kit S</span><span data-lang-inline="en">Kit S</span></div>
+          <div class="kit-price">$550 <span>USD</span></div>
+          <div class="kit-monthly"><span data-lang-inline="es" class="active">o $46/mes por 12 meses + $5/mes Básico</span><span data-lang-inline="en">or $46/mo for 12 months + $5/mo Basic</span></div>
+          <ul class="kit-features">
+            <li><span data-lang-inline="es" class="active">20 paneles</span><span data-lang-inline="en">20 panels</span></li>
+            <li><span data-lang-inline="es" class="active">Puerta aislada y módulo IoT</span><span data-lang-inline="en">Insulated door and IoT module</span></li>
+            <li><span data-lang-inline="es" class="active">1 mes de plan Pro sin costo</span><span data-lang-inline="en">1 month of Pro at no cost</span></li>
+          </ul>
+          <button class="rc-link" onclick="openModal('kit-s')"><span data-lang-inline="es" class="active">Ver qué incluye</span><span data-lang-inline="en">See what is included</span></button>
+          <button class="kit-btn" onclick="pickKit('s')"><span data-lang-inline="es" class="active">Configurar este kit</span><span data-lang-inline="en">Configure this kit</span></button>
+        </div>
+      </div>
+      <div class="kit-card">
+        <div class="kit-body">
+          <div class="kit-badge"><span data-lang-inline="es" class="active">Precio estimado</span><span data-lang-inline="en">Estimated price</span></div>
+          <div class="kit-name"><span data-lang-inline="es" class="active">Kit M</span><span data-lang-inline="en">Kit M</span></div>
+          <div class="kit-price">$700–900 <span>USD</span></div>
+          <div class="kit-monthly"></div>
+          <ul class="kit-features">
+            <li><span data-lang-inline="es" class="active">48 paneles</span><span data-lang-inline="en">48 panels</span></li>
+            <li><span data-lang-inline="es" class="active">Puerta aislada y módulo IoT</span><span data-lang-inline="en">Insulated door and IoT module</span></li>
+            <li><span data-lang-inline="es" class="active">1 mes de plan Pro sin costo</span><span data-lang-inline="en">1 month of Pro at no cost</span></li>
+          </ul>
+          <button class="rc-link" onclick="openModal('kit-m')"><span data-lang-inline="es" class="active">Ver qué incluye</span><span data-lang-inline="en">See what is included</span></button>
+          <button class="kit-btn" onclick="pickKit('m')"><span data-lang-inline="es" class="active">Configurar este kit</span><span data-lang-inline="en">Configure this kit</span></button>
+        </div>
+      </div>
+      <div class="kit-card featured">
+        <div class="kit-body">
+          <div class="kit-badge"><span data-lang-inline="es" class="active">Cámara 3 × 3 m · Más popular</span><span data-lang-inline="en">3 × 3 m chamber · Most popular</span></div>
+          <div class="kit-name"><span data-lang-inline="es" class="active">Kit Estándar</span><span data-lang-inline="en">Standard Kit</span></div>
+          <div class="kit-price">$1,550 <span>USD</span></div>
+          <div class="kit-monthly"><span data-lang-inline="es" class="active">o $129/mes por 12 meses + $5/mes Básico</span><span data-lang-inline="en">or $129/mo for 12 months + $5/mo Basic</span></div>
+          <ul class="kit-features">
+            <li><span data-lang-inline="es" class="active">51 paneles</span><span data-lang-inline="en">51 panels</span></li>
+            <li><span data-lang-inline="es" class="active">Puerta aislada y módulo IoT</span><span data-lang-inline="en">Insulated door and IoT module</span></li>
+            <li><span data-lang-inline="es" class="active">1 mes de plan Pro sin costo</span><span data-lang-inline="en">1 month of Pro at no cost</span></li>
+          </ul>
+          <button class="rc-link" onclick="openModal('kit-std')"><span data-lang-inline="es" class="active">Ver qué incluye</span><span data-lang-inline="en">See what is included</span></button>
+          <button class="kit-btn" onclick="pickKit('std')"><span data-lang-inline="es" class="active">Configurar este kit</span><span data-lang-inline="en">Configure this kit</span></button>
+        </div>
+      </div>
+      <div class="kit-card">
+        <div class="kit-body">
+          <div class="kit-badge"><span data-lang-inline="es" class="active">Precio estimado</span><span data-lang-inline="en">Estimated price</span></div>
+          <div class="kit-name"><span data-lang-inline="es" class="active">Kit L</span><span data-lang-inline="en">Kit L</span></div>
+          <div class="kit-price">$1,100–1,400 <span>USD</span></div>
+          <div class="kit-monthly"></div>
+          <ul class="kit-features">
+            <li><span data-lang-inline="es" class="active">80 paneles</span><span data-lang-inline="en">80 panels</span></li>
+            <li><span data-lang-inline="es" class="active">Puerta aislada y módulo IoT</span><span data-lang-inline="en">Insulated door and IoT module</span></li>
+            <li><span data-lang-inline="es" class="active">1 mes de plan Pro sin costo</span><span data-lang-inline="en">1 month of Pro at no cost</span></li>
+          </ul>
+          <button class="rc-link" onclick="openModal('kit-l')"><span data-lang-inline="es" class="active">Ver qué incluye</span><span data-lang-inline="en">See what is included</span></button>
+          <button class="kit-btn" onclick="pickKit('l')"><span data-lang-inline="es" class="active">Configurar este kit</span><span data-lang-inline="en">Configure this kit</span></button>
+        </div>
+      </div>
+  </div>
+</section>
+
+<!-- PAGO -->
+<section class="rc-ivory" id="pago">
+  <div class="rc-wrap">
+    <div class="rc-kicker"><span data-lang-inline="es" class="active">Cómo pagarlo</span><span data-lang-inline="en">How to pay for it</span></div>
+<h2 class="rc-title"><span data-lang="es" class="active">Dos caminos para tener tu cámara</span><span data-lang="en">Two ways to get your chamber</span></h2>
+
+    <div class="rc-two rc-two-top">
+      <div class="rc-block">
+        <h3 class="rc-h3"><span data-lang="es" class="active">Plan de pago a 12 meses</span><span data-lang="en">12-month payment plan</span></h3>
+        <div class="rc-table-wrap"><table class="rc-table"><thead><tr><th></th><th><span data-lang-inline="es" class="active">Monto</span><span data-lang-inline="en">Amount</span></th></tr></thead><tbody><tr><td><span data-lang-inline="es" class="active">Kit Estándar dividido en 12 cuotas</span><span data-lang-inline="en">Standard Kit split into 12 payments</span></td><td>$129/<span data-lang-inline="es" class="active">mes</span><span data-lang-inline="en">mo</span></td></tr><tr><td><span data-lang-inline="es" class="active">Membresía Básica</span><span data-lang-inline="en">Basic membership</span></td><td>$5/<span data-lang-inline="es" class="active">mes</span><span data-lang-inline="en">mo</span></td></tr><tr><td><strong><span data-lang-inline="es" class="active">Mes 1 al 12</span><span data-lang-inline="en">Months 1–12</span></strong></td><td><strong>$134/<span data-lang-inline="es" class="active">mes</span><span data-lang-inline="en">mo</span></strong></td></tr><tr><td><strong><span data-lang-inline="es" class="active">Desde el mes 13</span><span data-lang-inline="en">From month 13</span></strong></td><td><strong>$5/<span data-lang-inline="es" class="active">mes</span><span data-lang-inline="en">mo</span></strong></td></tr></tbody></table></div>
+        <p class="rc-body"><span data-lang="es" class="active">Pagas el kit en 12 cuotas junto con la membresía. Desde el mes 13 el kit ya es tuyo y solo pagas $5 al mes.</span><span data-lang="en">You pay the kit in 12 installments together with the membership. From month 13 the kit is yours and you only pay $5 a month.</span></p>
+      </div>
+      <div class="rc-block">
+        <h3 class="rc-h3"><span data-lang="es" class="active">Compra en cooperativa</span><span data-lang="en">Buy through a cooperative</span></h3>
+        <div class="rc-table-wrap"><table class="rc-table"><thead><tr><th><span data-lang-inline="es" class="active">Escenario</span><span data-lang-inline="en">Scenario</span></th><th><span data-lang-inline="es" class="active">Costo por familia</span><span data-lang-inline="en">Cost per family</span></th></tr></thead><tbody><tr><td><span data-lang-inline="es" class="active">Kit Estándar individual</span><span data-lang-inline="en">Individual Standard Kit</span></td><td>$1,550</td></tr><tr><td><span data-lang-inline="es" class="active">10 familias dividen el Kit Estándar</span><span data-lang-inline="en">10 families split the Standard Kit</span></td><td>$155</td></tr><tr><td><span data-lang-inline="es" class="active">Plan Cooperativa ($20/mes ÷ 10)</span><span data-lang-inline="en">Cooperative plan ($20/mo ÷ 10)</span></td><td>$2/<span data-lang-inline="es" class="active">mes</span><span data-lang-inline="en">mo</span></td></tr></tbody></table></div>
+        <p class="rc-body"><span data-lang="es" class="active">Diez familias comparten un Kit Estándar: cada una pone $155 y $2 al mes de membresía.</span><span data-lang="en">Ten families share a Standard Kit: each one pays $155 and $2 a month for membership.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUENA INVERSION -->
+<section class="rc-dark rc-dark-slim" id="inversion">
+  <div class="rc-wrap">
+    <div class="rc-kicker"><span data-lang-inline="es" class="active">Por qué Zoca</span><span data-lang-inline="en">Why Zoca</span></div>
+<h2 class="rc-title rc-title-light"><span data-lang="es" class="active">Una inversión que se paga sola</span><span data-lang="en">An investment that pays for itself</span></h2>
+
+    <div class="rc-stats rc-stats-4">
+      <div class="rc-stat"><div class="rc-stat-num">$200–600</div><div class="rc-stat-label"><span data-lang="es" class="active">USD al año que pierde una finca pequeña por falta de frío</span><span data-lang="en">USD a year a small farm loses from lack of cold storage</span></div></div>
+      <div class="rc-stat"><div class="rc-stat-num">1 <span data-lang-inline="es" class="active">año</span><span data-lang-inline="en">year</span></div><div class="rc-stat-label"><span data-lang="es" class="active">para recuperar el kit si evita una sola pérdida mayor</span><span data-lang="en">to recover the kit if it prevents one major loss</span></div></div>
+      <div class="rc-stat"><div class="rc-stat-num">6 h</div><div class="rc-stat-label"><span data-lang="es" class="active">de ventaja para actuar antes de que la fruta se pase</span><span data-lang="en">head start to act before the fruit spoils</span></div></div>
+      <div class="rc-stat"><div class="rc-stat-num">$5</div><div class="rc-stat-label"><span data-lang="es" class="active">al mes desde el año 2, con el kit ya pagado</span><span data-lang="en">a month from year 2, with the kit paid off</span></div></div>
+    </div>
+    <p class="rc-dark-text"><span data-lang="es" class="active">Con Zoca ya no tienes que vender toda la cosecha el mismo día. La guardas a la temperatura correcta, sabes en todo momento cómo está y vendes cuando te conviene. Lo que antes se perdía, ahora se vende.</span><span data-lang="en">With Zoca you no longer have to sell the whole harvest the same day. You store it at the right temperature, always know how it is doing and sell when it suits you. What used to be lost is now sold.</span></p>
+    <p class="rc-sources"><span data-lang="es" class="active">Pérdidas poscosecha estimadas con datos del Banco Mundial para pequeños productores latinoamericanos.</span><span data-lang="en">Post-harvest losses estimated with World Bank data for small Latin American producers.</span></p>
+  </div>
+</section>
+
+
+</main>
+
+<main class="rc-page" data-page="configurador">
+<!-- CONFIGURADOR -->
+<div class="configurator-section" id="configurador">
+  <div class="configurator-inner">
+    <div class="config-header">
+      <div class="section-label"><span data-lang="es" class="active">Configurador de kit</span><span data-lang="en">Kit builder</span></div>
+      <div class="section-title" style="margin-bottom:0;"><span data-lang="es" class="active">Arma tu kit</span><span data-lang="en">Build your kit</span></div>
+      <p><span data-lang="es" class="active">Elige tamaño, forma de compra, pago y membresía. El resumen se actualiza al instante.</span><span data-lang="en">Choose size, purchase type, payment and membership. The summary updates instantly.</span></p>
+    </div>
+    <div class="config-layout">
+      <div class="config-steps" id="config-accordion">
+        <div class="config-step open" id="step-size">
+          <div class="config-step-header" onclick="toggleStep('step-size')">
+            <div class="config-step-num">1</div>
+            <div class="config-step-meta">
+              <div class="config-step-title"><span data-lang="es" class="active">Tamaño de cámara</span><span data-lang="en">Chamber size</span></div>
+              <div class="config-step-subtitle" id="sub-size"><span data-lang-inline="es" class="active">Kit S · 20 paneles</span><span data-lang-inline="en">Kit S · 20 panels</span></div>
+            </div>
+            <svg class="config-step-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="config-step-body">
+            <div class="config-options"><button class="config-opt selected" data-step="size" data-key="s" onclick="choose('size','s')">
+                <div class="config-opt-check"></div>
+                <div class="config-opt-name"><span data-lang-inline="es" class="active">Kit S</span><span data-lang-inline="en">Kit S</span></div>
+                <div class="config-opt-detail"><span data-lang-inline="es" class="active">20 paneles</span><span data-lang-inline="en">20 panels</span></div>
+                <div class="config-opt-price">$550 USD</div>
+              </button><button class="config-opt" data-step="size" data-key="m" onclick="choose('size','m')">
+                <div class="config-opt-check"></div>
+                <div class="config-opt-name"><span data-lang-inline="es" class="active">Kit M</span><span data-lang-inline="en">Kit M</span></div>
+                <div class="config-opt-detail"><span data-lang-inline="es" class="active">48 paneles</span><span data-lang-inline="en">48 panels</span></div>
+                <div class="config-opt-price">$700–900 USD</div>
+              </button><button class="config-opt" data-step="size" data-key="std" onclick="choose('size','std')">
+                <div class="config-opt-check"></div>
+                <div class="config-opt-name"><span data-lang-inline="es" class="active">Kit Estándar</span><span data-lang-inline="en">Standard Kit</span></div>
+                <div class="config-opt-detail"><span data-lang-inline="es" class="active">51 paneles · cámara 3 × 3 m</span><span data-lang-inline="en">51 panels · 3 × 3 m chamber</span></div>
+                <div class="config-opt-price">$1,550 USD</div>
+              </button><button class="config-opt" data-step="size" data-key="l" onclick="choose('size','l')">
+                <div class="config-opt-check"></div>
+                <div class="config-opt-name"><span data-lang-inline="es" class="active">Kit L</span><span data-lang-inline="en">Kit L</span></div>
+                <div class="config-opt-detail"><span data-lang-inline="es" class="active">80 paneles</span><span data-lang-inline="en">80 panels</span></div>
+                <div class="config-opt-price">$1,100–1,400 USD</div>
+              </button></div>
+            <button class="step-continue" onclick="openNextStep('step-size')"><span data-lang-inline="es" class="active">Siguiente</span><span data-lang-inline="en">Next</span></button>
+          </div>
+        </div>
+        <div class="config-step" id="step-buy">
+          <div class="config-step-header" onclick="toggleStep('step-buy')">
+            <div class="config-step-num">2</div>
+            <div class="config-step-meta">
+              <div class="config-step-title"><span data-lang="es" class="active">Cómo compras</span><span data-lang="en">How you buy</span></div>
+              <div class="config-step-subtitle" id="sub-buy"><span data-lang-inline="es" class="active">Individual</span><span data-lang-inline="en">Individual</span></div>
+            </div>
+            <svg class="config-step-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="config-step-body">
+            <div class="config-options"><button class="config-opt selected" data-step="buy" data-key="solo" onclick="choose('buy','solo')">
+                <div class="config-opt-check"></div>
+                <div class="config-opt-name"><span data-lang-inline="es" class="active">Individual</span><span data-lang-inline="en">Individual</span></div>
+                <div class="config-opt-detail"><span data-lang-inline="es" class="active">Una finca, un kit</span><span data-lang-inline="en">One farm, one kit</span></div>
+                <div class="config-opt-price">100%</div>
+              </button><button class="config-opt" data-step="buy" data-key="coop" onclick="choose('buy','coop')">
+                <div class="config-opt-check"></div>
+                <div class="config-opt-name"><span data-lang-inline="es" class="active">Cooperativa</span><span data-lang-inline="en">Cooperative</span></div>
+                <div class="config-opt-detail"><span data-lang-inline="es" class="active">10 familias dividen el kit</span><span data-lang-inline="en">10 families split the kit</span></div>
+                <div class="config-opt-price">÷ 10</div>
+              </button></div>
+            <button class="step-continue" onclick="openNextStep('step-buy')"><span data-lang-inline="es" class="active">Siguiente</span><span data-lang-inline="en">Next</span></button>
+          </div>
+        </div>
+        <div class="config-step" id="step-pay">
+          <div class="config-step-header" onclick="toggleStep('step-pay')">
+            <div class="config-step-num">3</div>
+            <div class="config-step-meta">
+              <div class="config-step-title"><span data-lang="es" class="active">Forma de pago</span><span data-lang="en">Payment</span></div>
+              <div class="config-step-subtitle" id="sub-pay"><span data-lang-inline="es" class="active">Pago único</span><span data-lang-inline="en">One-time payment</span></div>
+            </div>
+            <svg class="config-step-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="config-step-body">
+            <div class="config-options"><button class="config-opt selected" data-step="pay" data-key="full" onclick="choose('pay','full')">
+                <div class="config-opt-check"></div>
+                <div class="config-opt-name"><span data-lang-inline="es" class="active">Pago único</span><span data-lang-inline="en">One-time payment</span></div>
+                <div class="config-opt-detail"><span data-lang-inline="es" class="active">Todo al recibir el kit</span><span data-lang-inline="en">All on delivery</span></div>
+                <div class="config-opt-price">—</div>
+              </button><button class="config-opt" data-step="pay" data-key="12m" onclick="choose('pay','12m')">
+                <div class="config-opt-check"></div>
+                <div class="config-opt-name"><span data-lang-inline="es" class="active">Plan 12 meses</span><span data-lang-inline="en">12-month plan</span></div>
+                <div class="config-opt-detail"><span data-lang-inline="es" class="active">Kit dividido en 12 cuotas</span><span data-lang-inline="en">Kit split into 12 payments</span></div>
+                <div class="config-opt-price">÷ 12</div>
+              </button></div>
+            <button class="step-continue" onclick="openNextStep('step-pay')"><span data-lang-inline="es" class="active">Siguiente</span><span data-lang-inline="en">Next</span></button>
+          </div>
+        </div>
+        <div class="config-step" id="step-plan">
+          <div class="config-step-header" onclick="toggleStep('step-plan')">
+            <div class="config-step-num">4</div>
+            <div class="config-step-meta">
+              <div class="config-step-title"><span data-lang="es" class="active">Membresía</span><span data-lang="en">Membership</span></div>
+              <div class="config-step-subtitle" id="sub-plan"><span data-lang-inline="es" class="active">Básico · $5/mes</span><span data-lang-inline="en">Basic · $5/mo</span></div>
+            </div>
+            <svg class="config-step-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="config-step-body">
+            <div class="config-options"><button class="config-opt selected" data-step="plan" data-key="basic" onclick="choose('plan','basic')">
+                <div class="config-opt-check"></div>
+                <div class="config-opt-name"><span data-lang-inline="es" class="active">Básico</span><span data-lang-inline="en">Basic</span></div>
+                <div class="config-opt-detail"><span data-lang-inline="es" class="active">1 finca · historial 90 días · soporte por email (72 h)</span><span data-lang-inline="en">1 farm · 90-day history · email support (72 h)</span></div>
+                <div class="config-opt-price">$5/<span data-lang-inline="es" class="active">mes</span><span data-lang-inline="en">mo</span></div>
+              </button><button class="config-opt" data-step="plan" data-key="pro" onclick="choose('plan','pro')">
+                <div class="config-opt-check"></div>
+                <div class="config-opt-name"><span data-lang-inline="es" class="active">Pro</span><span data-lang-inline="en">Pro</span></div>
+                <div class="config-opt-detail"><span data-lang-inline="es" class="active">1 finca · historial 1 año · chat (24 h) · SMS · calculadora de ahorro</span><span data-lang-inline="en">1 farm · 1-year history · chat (24 h) · SMS · savings calculator</span></div>
+                <div class="config-opt-price">$8/<span data-lang-inline="es" class="active">mes</span><span data-lang-inline="en">mo</span></div>
+              </button><button class="config-opt" data-step="plan" data-key="coop" onclick="choose('plan','coop')">
+                <div class="config-opt-check"></div>
+                <div class="config-opt-name"><span data-lang-inline="es" class="active">Cooperativa</span><span data-lang-inline="en">Cooperative</span></div>
+                <div class="config-opt-detail"><span data-lang-inline="es" class="active">Hasta 10 fincas · historial 1 año · chat prioritario (8 h) · SMS · calculadora</span><span data-lang-inline="en">Up to 10 farms · 1-year history · priority chat (8 h) · SMS · calculator</span></div>
+                <div class="config-opt-price">$20/<span data-lang-inline="es" class="active">mes</span><span data-lang-inline="en">mo</span></div>
+              </button></div>
+            <button class="step-continue" onclick="openNextStep('step-plan')"><span data-lang-inline="es" class="active">Ver resumen</span><span data-lang-inline="en">View summary</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-visual">
+          <div class="summary-visual-label"><span data-lang-inline="es" class="active">Vista de cámara</span><span data-lang-inline="en">Chamber view</span></div>
+          <svg viewBox="0 0 320 200" width="100%" style="display:block">
+            <rect x="0" y="0" width="320" height="200" fill="none"/>
+            <line x1="10" y1="170" x2="310" y2="170" stroke="rgba(245,240,224,.25)" stroke-width="1"/>
+            <g id="cv-room">
+              <rect id="cv-box" x="70" y="60" width="120" height="110" fill="rgba(245,240,224,.04)" stroke="#F5F0E0" stroke-width="1.2"/>
+              <g id="cv-grid"></g>
+              <rect id="cv-door" x="115" y="110" width="26" height="60" fill="none" stroke="#B98A4A" stroke-width="1.2"/>
+            </g>
+            <g id="cv-mod">
+              <rect x="232" y="22" width="76" height="62" rx="2" fill="none" stroke="rgba(245,240,224,.5)" stroke-width="1"/>
+              <text x="240" y="36" font-size="7" fill="rgba(245,240,224,.55)" font-family="Cormorant SC, serif" letter-spacing="1">IOT</text>
+              <text x="240" y="54" font-size="16" fill="#F5F0E0" font-family="Cormorant Garamond, serif">4 °C</text>
+              <text x="240" y="70" font-size="7" fill="#B98A4A" font-family="Cormorant Garamond, serif">C2H4 · CO2 · HR</text>
+            </g>
+            <g id="cv-fam" opacity="0"></g>
+            <text id="cv-dim" x="160" y="190" font-size="10" fill="rgba(245,240,224,.6)" font-family="Cormorant Garamond, serif" text-anchor="middle" font-style="italic">20 paneles</text>
+          </svg>
+        </div>
+        <div class="summary-body">
+          <div class="summary-title"><span data-lang="es" class="active">Tu kit Zoca</span><span data-lang="en">Your Zoca kit</span></div>
+          <div id="summary-lines">
+            <div class="summary-line"><span class="summary-line-label"><span data-lang-inline="es" class="active">Kit</span><span data-lang-inline="en">Kit</span></span><span class="summary-line-val" id="sl-size"></span></div>
+            <div class="summary-line"><span class="summary-line-label"><span data-lang-inline="es" class="active">Compra</span><span data-lang-inline="en">Purchase</span></span><span class="summary-line-val" id="sl-buy"></span></div>
+            <div class="summary-line"><span class="summary-line-label"><span data-lang-inline="es" class="active">Pago</span><span data-lang-inline="en">Payment</span></span><span class="summary-line-val" id="sl-pay"></span></div>
+            <div class="summary-line"><span class="summary-line-label"><span data-lang-inline="es" class="active">Membresía</span><span data-lang-inline="en">Membership</span></span><span class="summary-line-val" id="sl-plan"></span></div>
+          </div>
+          <div class="summary-price-row">
+            <span class="summary-price-label" id="sum-price-label">Total</span>
+            <span class="summary-price" id="summary-price">$550</span>
+          </div>
+          <div class="summary-monthly" id="summary-monthly"></div>
+          <div class="summary-monthly" id="summary-after"></div>
+          <div class="summary-monthly" id="summary-note"></div>
+          <button class="summary-cta" onclick="scrollToOrderWithConfig()"><span data-lang-inline="es" class="active">Solicitar este kit</span><span data-lang-inline="en">Request this kit</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</main>
+
+<main class="rc-page" data-page="membresias">
+<!-- MEMBRESIAS -->
+<section class="section" id="plans">
+  <div class="section-label"><span data-lang="es" class="active">Membresías</span><span data-lang="en">Memberships</span></div>
+  <div class="section-title"><span data-lang="es" class="active">Monitoreo que nunca para</span><span data-lang="en">Monitoring that never stops</span></div>
+  <div class="rc-table-wrap"><table class="rc-table rc-plans"><thead><tr><th></th><th>Básico</th><th>Pro</th><th><span data-lang-inline="es" class="active">Cooperativa</span><span data-lang-inline="en">Cooperative</span></th></tr></thead><tbody><tr><td><span data-lang-inline="es" class="active">Precio</span><span data-lang-inline="en">Price</span></td><td>$5/<span data-lang-inline="es" class="active">mes</span><span data-lang-inline="en">mo</span></td><td>$8/<span data-lang-inline="es" class="active">mes</span><span data-lang-inline="en">mo</span></td><td>$20/<span data-lang-inline="es" class="active">mes</span><span data-lang-inline="en">mo</span></td></tr><tr><td><span data-lang-inline="es" class="active">Fincas incluidas</span><span data-lang-inline="en">Farms included</span></td><td>1</td><td>1</td><td><span data-lang-inline="es" class="active">Hasta 10</span><span data-lang-inline="en">Up to 10</span></td></tr><tr><td><span data-lang-inline="es" class="active">Historial</span><span data-lang-inline="en">History</span></td><td><span data-lang-inline="es" class="active">90 días</span><span data-lang-inline="en">90 days</span></td><td><span data-lang-inline="es" class="active">1 año</span><span data-lang-inline="en">1 year</span></td><td><span data-lang-inline="es" class="active">1 año</span><span data-lang-inline="en">1 year</span></td></tr><tr><td><span data-lang-inline="es" class="active">Soporte</span><span data-lang-inline="en">Support</span></td><td>Email (72 h)</td><td>Chat (24 h)</td><td><span data-lang-inline="es" class="active">Chat prioritario (8 h)</span><span data-lang-inline="en">Priority chat (8 h)</span></td></tr><tr><td><span data-lang-inline="es" class="active">Monitoreo en tiempo real</span><span data-lang-inline="en">Real-time monitoring</span></td><td><span class="rc-yes">&#10003;</span></td><td><span class="rc-yes">&#10003;</span></td><td><span class="rc-yes">&#10003;</span></td></tr><tr><td><span data-lang-inline="es" class="active">Alertas por app</span><span data-lang-inline="en">App alerts</span></td><td><span class="rc-yes">&#10003;</span></td><td><span class="rc-yes">&#10003;</span></td><td><span class="rc-yes">&#10003;</span></td></tr><tr><td><span data-lang-inline="es" class="active">Backups automáticos cada 6 horas</span><span data-lang-inline="en">Automatic backups every 6 hours</span></td><td><span class="rc-yes">&#10003;</span></td><td><span class="rc-yes">&#10003;</span></td><td><span class="rc-yes">&#10003;</span></td></tr><tr><td><span data-lang-inline="es" class="active">Alertas por SMS</span><span data-lang-inline="en">SMS alerts</span></td><td><span class="rc-no">—</span></td><td><span class="rc-yes">&#10003;</span></td><td><span class="rc-yes">&#10003;</span></td></tr><tr><td><span data-lang-inline="es" class="active">Calculadora de ahorro</span><span data-lang-inline="en">Savings calculator</span></td><td><span class="rc-no">—</span></td><td><span class="rc-yes">&#10003;</span></td><td><span class="rc-yes">&#10003;</span></td></tr></tbody></table></div>
+  <p class="rc-note"><span data-lang="es" class="active">Todos los kits incluyen un mes de plan Pro sin costo.</span><span data-lang="en">Every kit includes one month of the Pro plan at no cost.</span></p>
+</section>
+
+
+
+</main>
+
+<main class="rc-page" data-page="preguntas">
+<!-- FAQ -->
+<section class="rc-light" id="faq">
+  <div class="rc-wrap rc-narrow">
+    <div class="rc-kicker"><span data-lang-inline="es" class="active">Preguntas frecuentes</span><span data-lang-inline="en">FAQ</span></div>
+<h2 class="rc-title"><span data-lang="es" class="active">Lo que nos preguntan</span><span data-lang="en">What people ask us</span></h2>
+
+    <details class="rc-faq"><summary><span data-lang-inline="es" class="active">¿Necesito albañil o herramientas para armarlo?</span><span data-lang-inline="en">Do I need a mason or tools to assemble it?</span></summary><p><span data-lang="es" class="active">No. Los paneles encajan entre sí con un perfil macho-hembra y quedan fijos sin tornillos externos. No hace falta albañil ni herramienta especializada.</span><span data-lang="en">No. Panels lock together with a tongue-and-groove edge and stay fixed without external screws. No mason or specialized tools needed.</span></p></details><details class="rc-faq"><summary><span data-lang-inline="es" class="active">¿Qué pasa si se daña un panel?</span><span data-lang-inline="en">What if a panel gets damaged?</span></summary><p><span data-lang="es" class="active">Se reemplaza solo ese panel. No tienes que desarmar ni cambiar la cámara completa.</span><span data-lang="en">Only that panel is replaced. You do not need to take apart or replace the whole chamber.</span></p></details><details class="rc-faq"><summary><span data-lang-inline="es" class="active">¿A qué temperatura mantiene la cosecha?</span><span data-lang-inline="en">What temperature does it keep the harvest at?</span></summary><p><span data-lang="es" class="active">El sistema vigila que la cámara esté entre 4 °C y 8 °C. Si baja o sube de ese rango, te avisa al celular.</span><span data-lang="en">The system keeps watch so the chamber stays between 4 °C and 8 °C. If it goes below or above that range, you get an alert on your phone.</span></p></details><details class="rc-faq"><summary><span data-lang-inline="es" class="active">¿Qué pasa si se va el internet?</span><span data-lang-inline="en">What if the internet goes down?</span></summary><p><span data-lang="es" class="active">El módulo guarda los datos localmente hasta por 72 horas y los sincroniza cuando vuelve la conexión. Además, la app hace copias de seguridad automáticas cada 6 horas.</span><span data-lang="en">The module stores data locally for up to 72 hours and syncs when the connection returns. The app also makes automatic backups every 6 hours.</span></p></details><details class="rc-faq"><summary><span data-lang-inline="es" class="active">¿Cómo me llegan las alertas?</span><span data-lang-inline="en">How do I get alerts?</span></summary><p><span data-lang="es" class="active">Por la app en todos los planes. Los planes Pro y Cooperativa también te mandan alertas por SMS.</span><span data-lang="en">Through the app on every plan. The Pro and Cooperative plans also send SMS alerts.</span></p></details><details class="rc-faq"><summary><span data-lang-inline="es" class="active">¿Por qué necesito la membresía?</span><span data-lang-inline="en">Why do I need the membership?</span></summary><p><span data-lang="es" class="active">La membresía es lo que te da la app: monitoreo en tiempo real, alertas e historial. Sin ella tienes un cuarto frío; con ella sabes en todo momento cómo está tu cosecha.</span><span data-lang="en">The membership is what gives you the app: real-time monitoring, alerts and history. Without it you have a cold room; with it you always know how your harvest is doing.</span></p></details><details class="rc-faq"><summary><span data-lang-inline="es" class="active">¿Por qué lana de roca basáltica?</span><span data-lang-inline="en">Why basalt rock wool?</span></summary><p><span data-lang="es" class="active">Porque es químicamente inerte, no se corroe en ambientes húmedos y dura más en el campo.</span><span data-lang="en">Because it is chemically inert, does not corrode in humid environments and lasts longer in the field.</span></p></details><details class="rc-faq"><summary><span data-lang-inline="es" class="active">¿Puedo compartir una cámara con otras familias?</span><span data-lang-inline="en">Can I share a chamber with other families?</span></summary><p><span data-lang="es" class="active">Sí. Con el plan Cooperativa hasta 10 fincas comparten un Kit Estándar y el monitoreo: $155 por familia y $2 al mes.</span><span data-lang="en">Yes. With the Cooperative plan up to 10 farms share a Standard Kit and the monitoring: $155 per family and $2 a month.</span></p></details>
+  </div>
+</section>
+
+
+</main>
+
+<main class="rc-page" data-page="contacto">
+<!-- ORDER FORM -->
+<div class="order-section" id="order">
+  <div class="order-inner">
+    <div class="order-photo">
+      <img src="img/split.jpg" alt="">
+      <div class="order-photo-caption">
+        <span data-lang-inline="es" class="active">Del invernadero a tu cámara</span>
+        <span data-lang-inline="en">From the greenhouse to your chamber</span>
+      </div>
+    </div>
+    <div id="formBox">
+      <div class="section-label">
+        <span data-lang="es" class="active">Contacto</span>
+        <span data-lang="en">Contact</span>
+      </div>
+      <h2 class="form-title">
+        <span data-lang="es" class="active">Contáctanos</span>
+        <span data-lang="en">Contact us</span>
+      </h2>
+      <p class="form-sub">
+        <span data-lang="es" class="active">Cuéntanos qué necesitas y te contactamos en menos de 48 horas para cotizar y coordinar el envío.</span>
+        <span data-lang="en">Tell us what you need and we will contact you within 48 hours to quote and coordinate shipping.</span>
+      </p>
+      <form onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>
+              <span data-lang-inline="es" class="active">Nombre completo</span>
+              <span data-lang-inline="en">Full name</span>
+            </label>
+            <input type="text" id="fname" placeholder="Jose Martinez" required>
+          </div>
+          <div class="form-group">
+            <label>
+              <span data-lang-inline="es" class="active">Teléfono</span>
+              <span data-lang-inline="en">Phone</span>
+            </label>
+            <input type="tel" id="fphone" placeholder="+57 300 000 0000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>
+            <span data-lang-inline="es" class="active">Correo electrónico</span>
+            <span data-lang-inline="en">Email address</span>
+          </label>
+          <input type="email" id="femail" placeholder="correo@ejemplo.com" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>
+              <span data-lang-inline="es" class="active">Kit de interés</span>
+              <span data-lang-inline="en">Kit of interest</span>
+            </label>
+            <select id="fkit" required>
+              <option value="" data-es="Selecciona un kit" data-en="Select a kit">Selecciona un kit</option>
+              <option value="kit-s">Kit S — $550 USD</option>
+              <option value="kit-m">Kit M — $700–900 USD</option>
+              <option value="kit-estandar">Kit Estándar — $1,550 USD</option>
+              <option value="kit-l">Kit L — $1,100–1,400 USD</option>
+              <option value="no-se" data-es="Todavía no sé" data-en="Not sure yet">Todavía no sé</option>
+              <option value="kit-personalizado" data-es="Kit personalizado (configurado arriba)" data-en="Custom kit (configured above)">Kit personalizado (configurado arriba)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>
+              <span data-lang-inline="es" class="active">Forma de pago</span>
+              <span data-lang-inline="en">Payment option</span>
+            </label>
+            <select id="fpayment">
+              <option value="" data-es="Selecciona una opción" data-en="Select an option">Selecciona una opción</option>
+              <option value="full" id="optFull" data-es="Pago completo" data-en="Full payment">Pago completo</option>
+              <option value="12m" id="opt12m" data-es="Plan 12 meses" data-en="12-month plan">Plan 12 meses</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>
+            <span data-lang-inline="es" class="active">Departamento / municipio</span>
+            <span data-lang-inline="en">Department / municipality</span>
+          </label>
+          <input type="text" id="fdept" placeholder="Boyaca, Villa de Leyva">
+        </div>
+        <div class="form-group">
+          <label>
+            <span data-lang-inline="es" class="active">Información adicional (opcional)</span>
+            <span data-lang-inline="en">Additional information (optional)</span>
+          </label>
+          <textarea id="fnotes" placeholder="Tamaño de tu finca, cultivos principales, configuración elegida, etc."></textarea>
+        </div>
+        <button type="submit" class="form-submit">
+          <span data-lang-inline="es" class="active">Enviar</span>
+          <span data-lang-inline="en">Send</span>
+        </button>
+        <p class="form-note">
+          <span data-lang="es" class="active">Sin compromiso. Te contactamos por WhatsApp o correo para confirmar disponibilidad y la fecha de envío.</span>
+          <span data-lang="en">No commitment. We will reach out by WhatsApp or email to confirm availability and the shipping date.</span>
+        </p>
+      </form>
+    </div>
+    <div id="successBox" style="display:none;" class="success-box">
+      <h3>
+        <span data-lang="es" class="active">Solicitud recibida</span>
+        <span data-lang="en">Request received</span>
+      </h3>
+      <p>
+        <span data-lang="es" class="active">Gracias. Te contactamos en menos de 48 horas.</span>
+        <span data-lang="en">Thank you. We will contact you within 48 hours.</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+<!-- TERMINOS -->
+<section class="rc-terms">
+  <div class="rc-wrap rc-terms-row">
+    <div class="rc-terms-item"><strong><span data-lang-inline="es" class="active">Envío</span><span data-lang-inline="en">Shipping</span></strong> <span data-lang-inline="es" class="active">Zoca envía el kit a tu finca.</span><span data-lang-inline="en">Zoca ships the kit to your farm.</span></div>
+    <div class="rc-terms-item"><strong><span data-lang-inline="es" class="active">Armado</span><span data-lang-inline="en">Assembly</span></strong> <span data-lang-inline="es" class="active">Lo armas tú, sin herramientas especiales.</span><span data-lang-inline="en">You assemble it, no special tools.</span></div>
+    <div class="rc-terms-item"><strong><span data-lang-inline="es" class="active">Respaldo</span><span data-lang-inline="en">Backups</span></strong> <span data-lang-inline="es" class="active">Copias automáticas cada 6 horas.</span><span data-lang-inline="en">Automatic backups every 6 hours.</span></div>
+    <button class="rc-link" onclick="openModal('terminos')"><span data-lang-inline="es" class="active">Términos y condiciones</span><span data-lang-inline="en">Terms and conditions</span></button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer">
+    <div class="footer-logo">
+      <svg width="30" height="30" viewBox="66 40 44 58" fill="none" stroke="#F5F0E0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M70 92h36"/><path d="M76 92v-10h24v10"/><path d="M76 82l4-3h16l4 3"/><path d="M88 79V50"/><path d="M88 62c-10 0-16-6-16-14 9 0 16 5 16 14z"/><path d="M88 56c10 0 16-6 16-14-9 0-16 5-16 14z"/></svg>
+      <div class="footer-logo-text">Zoca<span>.</span></div>
+    </div>
+    <div class="footer-copy">
+      <span data-lang="es" class="active">© 2026 Zoca. Refrigeración modular para el campo. Fotos: Unsplash.</span>
+      <span data-lang="en">© 2026 Zoca. Modular cold storage for farmers. Photos: Unsplash.</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- MODALS -->
+<div class="rc-modal" id="m-colombia" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal()">
+  <div class="rc-modal-box">
+    <button class="rc-modal-x" onclick="closeModal()" aria-label="Cerrar">&times;</button>
+    <h3 class="rc-modal-title"><span data-lang="es" class="active">Dónde empezamos</span><span data-lang="en">Where we start</span></h3>
+    <p class="rc-body"><span data-lang="es" class="active">Zoca nace pensando en cualquier finca pequeña con calor y sin cadena de frío: Perú, Ecuador, México, Centroamérica, África subsahariana o el sur de Asia. Empezamos en Colombia porque ahí se juntan los datos, el canal y el financiamiento.</span><span data-lang="en">Zoca is built for any small farm with heat and no cold chain: Peru, Ecuador, Mexico, Central America, Sub-Saharan Africa or South Asia. We start in Colombia because data, channel and financing come together there.</span></p><ol class="rc-list"><li><span data-lang-inline="es" class="active">Las pérdidas están documentadas: 9.76 millones de toneladas al año, con fuente oficial.</span><span data-lang-inline="en">Losses are documented: 9.76 million tons per year, from official sources.</span></li><li><span data-lang-inline="es" class="active">Boyacá y Cundinamarca concentran los cultivos perecederos más afectados: papa, mora, tomate de árbol, fresa y zanahoria.</span><span data-lang-inline="en">Boyacá and Cundinamarca concentrate the most affected perishable crops: potato, blackberry, tree tomato, strawberry and carrot.</span></li><li><span data-lang-inline="es" class="active">Las cooperativas agrícolas ya están organizadas en la región.</span><span data-lang-inline="en">Farm cooperatives are already organized in the region.</span></li><li><span data-lang-inline="es" class="active">El clima de Boyacá (10–18 °C, con picos de calor que dañan la cosecha) es el mismo problema de las zonas montañosas tropicales de toda América Latina.</span><span data-lang-inline="en">The Boyacá climate (10–18 °C, with heat peaks that damage the harvest) is the same problem found across tropical mountain regions of Latin America.</span></li><li><span data-lang-inline="es" class="active">El Ministerio de Agricultura tiene líneas de crédito para tecnificación de finca que pueden financiar parte del kit.</span><span data-lang-inline="en">The Ministry of Agriculture has farm modernization credit lines that can fund part of the kit.</span></li></ol><p class="rc-body"><span data-lang="es" class="active">El kit es el mismo en cualquier país.</span><span data-lang="en">The kit is the same in any country.</span></p>
+  </div>
+</div>
+<div class="rc-modal" id="m-panel" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal()">
+  <div class="rc-modal-box">
+    <button class="rc-modal-x" onclick="closeModal()" aria-label="Cerrar">&times;</button>
+    <h3 class="rc-modal-title"><span data-lang="es" class="active">El panel</span><span data-lang="en">The panel</span></h3>
+    <div class="rc-table-wrap"><table class="rc-table"><thead><tr><th><span data-lang-inline="es" class="active">Dimensión</span><span data-lang-inline="en">Dimension</span></th><th><span data-lang-inline="es" class="active">Valor</span><span data-lang-inline="en">Value</span></th></tr></thead><tbody><tr><td><span data-lang-inline="es" class="active">Ancho</span><span data-lang-inline="en">Width</span></td><td>1.20 m</td></tr><tr><td><span data-lang-inline="es" class="active">Alto</span><span data-lang-inline="en">Height</span></td><td>0.60 m</td></tr><tr><td><span data-lang-inline="es" class="active">Espesor</span><span data-lang-inline="en">Thickness</span></td><td>0.10 m</td></tr><tr><td><span data-lang-inline="es" class="active">Peso</span><span data-lang-inline="en">Weight</span></td><td>~8 kg</td></tr></tbody></table></div><div class="rc-table-wrap"><table class="rc-table"><thead><tr><th><span data-lang-inline="es" class="active">Capa</span><span data-lang-inline="en">Layer</span></th><th>Material</th><th><span data-lang-inline="es" class="active">Espesor</span><span data-lang-inline="en">Thickness</span></th></tr></thead><tbody><tr><td><span data-lang-inline="es" class="active">Exterior (ambos lados)</span><span data-lang-inline="en">Exterior (both sides)</span></td><td><span data-lang-inline="es" class="active">Placa metálica galvanizada</span><span data-lang-inline="en">Galvanized metal sheet</span></td><td>1 mm</td></tr><tr><td><span data-lang-inline="es" class="active">Núcleo</span><span data-lang-inline="en">Core</span></td><td><span data-lang-inline="es" class="active">Lana de roca basáltica</span><span data-lang-inline="en">Basalt rock wool</span></td><td>~50 mm</td></tr></tbody></table></div><p class="rc-body"><span data-lang="es" class="active">Los paneles encajan entre sí con un perfil macho-hembra en el borde: se deslizan y quedan fijos sin tornillos externos, sin albañil ni herramienta especializada.</span><span data-lang="en">Panels lock together with a tongue-and-groove edge: they slide in and stay fixed without external screws, masons or specialized tools.</span></p>
+  </div>
+</div>
+<div class="rc-modal" id="m-sensores" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal()">
+  <div class="rc-modal-box">
+    <button class="rc-modal-x" onclick="closeModal()" aria-label="Cerrar">&times;</button>
+    <h3 class="rc-modal-title"><span data-lang="es" class="active">Los sensores</span><span data-lang="en">The sensors</span></h3>
+    <div class="rc-table-wrap"><table class="rc-table"><thead><tr><th><span data-lang-inline="es" class="active">Sensor</span><span data-lang-inline="en">Sensor</span></th><th><span data-lang-inline="es" class="active">Qué mide</span><span data-lang-inline="en">What it measures</span></th><th><span data-lang-inline="es" class="active">Te avisa cuando</span><span data-lang-inline="en">Alerts you when</span></th></tr></thead><tbody><tr><td>DHT22 / SHT31</td><td><span data-lang-inline="es" class="active">Temperatura</span><span data-lang-inline="en">Temperature</span></td><td><span data-lang-inline="es" class="active">baja de 4 °C o sube de 8 °C</span><span data-lang-inline="en">drops below 4 °C or goes above 8 °C</span></td></tr><tr><td>SHT31</td><td><span data-lang-inline="es" class="active">Humedad relativa</span><span data-lang-inline="en">Relative humidity</span></td><td><span data-lang-inline="es" class="active">pasa de 85%</span><span data-lang-inline="en">goes above 85%</span></td></tr><tr><td>MH-Z19B</td><td>CO<sub>2</sub></td><td><span data-lang-inline="es" class="active">pasa de 600 ppm</span><span data-lang-inline="en">goes above 600 ppm</span></td></tr><tr><td>MQ-3 / TGS2602</td><td><span data-lang-inline="es" class="active">Etileno</span><span data-lang-inline="en">Ethylene</span></td><td><span data-lang-inline="es" class="active">pasa de 100 ppb</span><span data-lang-inline="en">goes above 100 ppb</span></td></tr><tr><td>Reed Switch</td><td><span data-lang-inline="es" class="active">Puerta</span><span data-lang-inline="en">Door</span></td><td><span data-lang-inline="es" class="active">alguien abre la puerta</span><span data-lang-inline="en">someone opens the door</span></td></tr></tbody></table></div><p class="rc-body"><span data-lang="es" class="active">Si se va el internet, el módulo guarda los datos hasta por 72 horas y los sincroniza cuando vuelve la conexión.</span><span data-lang="en">If the internet goes down, the module stores data for up to 72 hours and syncs when the connection returns.</span></p>
+  </div>
+</div>
+<div class="rc-modal" id="m-app-dash" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal()">
+  <div class="rc-modal-box">
+    <button class="rc-modal-x" onclick="closeModal()" aria-label="Cerrar">&times;</button>
+    <h3 class="rc-modal-title"><span data-lang="es" class="active">Dashboard</span><span data-lang="en">Dashboard</span></h3>
+    <p class="rc-body"><span data-lang="es" class="active">Lo primero que ves al abrir la app: si la cámara está bien, las alertas activas y cuánto dinero llevas ahorrado al no perder cosecha.</span><span data-lang="en">The first thing you see when you open the app: whether the chamber is fine, active alerts, and how much money you have saved by not losing harvest.</span></p>
+  </div>
+</div>
+<div class="rc-modal" id="m-app-sens" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal()">
+  <div class="rc-modal-box">
+    <button class="rc-modal-x" onclick="closeModal()" aria-label="Cerrar">&times;</button>
+    <h3 class="rc-modal-title"><span data-lang="es" class="active">Sensores</span><span data-lang="en">Sensors</span></h3>
+    <p class="rc-body"><span data-lang="es" class="active">La temperatura, la humedad, el CO2, el etileno y la puerta, uno por uno, con su historial para ver cómo han cambiado.</span><span data-lang="en">Temperature, humidity, CO2, ethylene and the door, one by one, with their history so you can see how they have changed.</span></p>
+  </div>
+</div>
+<div class="rc-modal" id="m-app-alert" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal()">
+  <div class="rc-modal-box">
+    <button class="rc-modal-x" onclick="closeModal()" aria-label="Cerrar">&times;</button>
+    <h3 class="rc-modal-title"><span data-lang="es" class="active">Alertas</span><span data-lang="en">Alerts</span></h3>
+    <p class="rc-body"><span data-lang="es" class="active">La lista de avisos que te ha mandado la cámara (puerta abierta, temperatura alta, maduración), y puedes filtrarla por tipo o por fecha.</span><span data-lang="en">The list of warnings the chamber has sent you (door open, high temperature, ripening), which you can filter by type or date.</span></p>
+  </div>
+</div>
+<div class="rc-modal" id="m-app-kit" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal()">
+  <div class="rc-modal-box">
+    <button class="rc-modal-x" onclick="closeModal()" aria-label="Cerrar">&times;</button>
+    <h3 class="rc-modal-title"><span data-lang="es" class="active">Mi Kit</span><span data-lang="en">My Kit</span></h3>
+    <p class="rc-body"><span data-lang="es" class="active">Los datos de tu cámara: qué kit tienes, qué sensores trae, y tu tarjeta de licencia Zoca.</span><span data-lang="en">Your chamber details: which kit you have, which sensors it has, and your Zoca license card.</span></p>
+  </div>
+</div>
+<div class="rc-modal" id="m-kit-s" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal()">
+  <div class="rc-modal-box">
+    <button class="rc-modal-x" onclick="closeModal()" aria-label="Cerrar">&times;</button>
+    <h3 class="rc-modal-title"><span data-lang="es" class="active">Kit S</span><span data-lang="en">Kit S</span></h3>
+    <div class="rc-modal-price">$550 USD</div><ul class="rc-checks"><li><span data-lang-inline="es" class="active">20 paneles de lana de roca basáltica (1.20 × 0.60 m)</span><span data-lang-inline="en">20 basalt rock wool panels (1.20 × 0.60 m)</span></li><li><span data-lang-inline="es" class="active">Puerta aislada</span><span data-lang-inline="en">Insulated door</span></li><li><span data-lang-inline="es" class="active">Módulo IoT con sensores de temperatura, humedad, CO2, etileno y puerta</span><span data-lang-inline="en">IoT module with temperature, humidity, CO2, ethylene and door sensors</span></li><li><span data-lang-inline="es" class="active">Acceso a la app de monitoreo</span><span data-lang-inline="en">Access to the monitoring app</span></li><li><span data-lang-inline="es" class="active">1 mes de plan Pro sin costo</span><span data-lang-inline="en">1 month of Pro plan at no cost</span></li></ul>
+  </div>
+</div>
+<div class="rc-modal" id="m-kit-m" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal()">
+  <div class="rc-modal-box">
+    <button class="rc-modal-x" onclick="closeModal()" aria-label="Cerrar">&times;</button>
+    <h3 class="rc-modal-title"><span data-lang="es" class="active">Kit M</span><span data-lang="en">Kit M</span></h3>
+    <div class="rc-modal-price">$700–900 USD</div><ul class="rc-checks"><li><span data-lang-inline="es" class="active">48 paneles de lana de roca basáltica (1.20 × 0.60 m)</span><span data-lang-inline="en">48 basalt rock wool panels (1.20 × 0.60 m)</span></li><li><span data-lang-inline="es" class="active">Puerta aislada</span><span data-lang-inline="en">Insulated door</span></li><li><span data-lang-inline="es" class="active">Módulo IoT con sensores de temperatura, humedad, CO2, etileno y puerta</span><span data-lang-inline="en">IoT module with temperature, humidity, CO2, ethylene and door sensors</span></li><li><span data-lang-inline="es" class="active">Acceso a la app de monitoreo</span><span data-lang-inline="en">Access to the monitoring app</span></li><li><span data-lang-inline="es" class="active">1 mes de plan Pro sin costo</span><span data-lang-inline="en">1 month of Pro plan at no cost</span></li></ul><p class="rc-body"><span data-lang="es" class="active">Precio estimado. Te confirmamos el precio final cuando nos contactes.</span><span data-lang="en">Estimated price. We confirm the final price when you contact us.</span></p>
+  </div>
+</div>
+<div class="rc-modal" id="m-kit-std" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal()">
+  <div class="rc-modal-box">
+    <button class="rc-modal-x" onclick="closeModal()" aria-label="Cerrar">&times;</button>
+    <h3 class="rc-modal-title"><span data-lang="es" class="active">Kit Estándar</span><span data-lang="en">Standard Kit</span></h3>
+    <div class="rc-modal-price">$1,550 USD</div><ul class="rc-checks"><li><span data-lang-inline="es" class="active">51 paneles de lana de roca basáltica (1.20 × 0.60 m)</span><span data-lang-inline="en">51 basalt rock wool panels (1.20 × 0.60 m)</span></li><li><span data-lang-inline="es" class="active">Perfil galvanizado, herrajes y fijaciones</span><span data-lang-inline="en">Galvanized profile, hardware and fasteners</span></li><li><span data-lang-inline="es" class="active">Puerta con sello EPDM de 0.9 × 2 m</span><span data-lang-inline="en">0.9 × 2 m EPDM-sealed door</span></li><li><span data-lang-inline="es" class="active">Piso plástico industrial (15 m²)</span><span data-lang-inline="en">Industrial plastic floor (15 m²)</span></li><li><span data-lang-inline="es" class="active">Mini split Midea 9,000 BTU 220 V</span><span data-lang-inline="en">Midea 9,000 BTU 220 V mini split</span></li><li><span data-lang-inline="es" class="active">Módulo IoT: ESP32, sensores, módulo 4G y caja IP65</span><span data-lang-inline="en">IoT module: ESP32, sensors, 4G module and IP65 enclosure</span></li><li><span data-lang-inline="es" class="active">Batería con cargador solar para el módulo</span><span data-lang-inline="en">Battery with solar charger for the module</span></li><li><span data-lang-inline="es" class="active">Acceso a la app de monitoreo</span><span data-lang-inline="en">Access to the monitoring app</span></li><li><span data-lang-inline="es" class="active">1 mes de plan Pro sin costo</span><span data-lang-inline="en">1 month of Pro plan at no cost</span></li></ul>
+  </div>
+</div>
+<div class="rc-modal" id="m-kit-l" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal()">
+  <div class="rc-modal-box">
+    <button class="rc-modal-x" onclick="closeModal()" aria-label="Cerrar">&times;</button>
+    <h3 class="rc-modal-title"><span data-lang="es" class="active">Kit L</span><span data-lang="en">Kit L</span></h3>
+    <div class="rc-modal-price">$1,100–1,400 USD</div><ul class="rc-checks"><li><span data-lang-inline="es" class="active">80 paneles de lana de roca basáltica (1.20 × 0.60 m)</span><span data-lang-inline="en">80 basalt rock wool panels (1.20 × 0.60 m)</span></li><li><span data-lang-inline="es" class="active">Puerta aislada</span><span data-lang-inline="en">Insulated door</span></li><li><span data-lang-inline="es" class="active">Módulo IoT con sensores de temperatura, humedad, CO2, etileno y puerta</span><span data-lang-inline="en">IoT module with temperature, humidity, CO2, ethylene and door sensors</span></li><li><span data-lang-inline="es" class="active">Acceso a la app de monitoreo</span><span data-lang-inline="en">Access to the monitoring app</span></li><li><span data-lang-inline="es" class="active">1 mes de plan Pro sin costo</span><span data-lang-inline="en">1 month of Pro plan at no cost</span></li></ul><p class="rc-body"><span data-lang="es" class="active">Precio estimado. Te confirmamos el precio final cuando nos contactes.</span><span data-lang="en">Estimated price. We confirm the final price when you contact us.</span></p>
+  </div>
+</div>
+<div class="rc-modal" id="m-terminos" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal()">
+  <div class="rc-modal-box">
+    <button class="rc-modal-x" onclick="closeModal()" aria-label="Cerrar">&times;</button>
+    <h3 class="rc-modal-title"><span data-lang="es" class="active">Términos y condiciones</span><span data-lang="en">Terms and conditions</span></h3>
+    <h4 class="rc-h4"><span data-lang-inline="es" class="active">Envío</span><span data-lang-inline="en">Shipping</span></h4><p class="rc-body"><span data-lang="es" class="active">Zoca se encarga de enviar el kit completo a tu finca.</span><span data-lang="en">Zoca ships the complete kit to your farm.</span></p><h4 class="rc-h4"><span data-lang-inline="es" class="active">Armado</span><span data-lang-inline="en">Assembly</span></h4><p class="rc-body"><span data-lang="es" class="active">El armado de la cámara lo hace el cliente. Los paneles están diseñados para ensamblarse fácilmente, sin albañil ni herramienta especializada.</span><span data-lang="en">The customer assembles the chamber. Panels are designed for easy assembly, without a mason or specialized tools.</span></p><h4 class="rc-h4"><span data-lang-inline="es" class="active">Membresía y app</span><span data-lang-inline="en">Membership and app</span></h4><p class="rc-body"><span data-lang="es" class="active">El acceso a la app de monitoreo depende de tener una membresía activa (Básico, Pro o Cooperativa). Todos los kits incluyen un mes de plan Pro sin costo.</span><span data-lang="en">Access to the monitoring app requires an active membership (Basic, Pro or Cooperative). Every kit includes one month of the Pro plan at no cost.</span></p><h4 class="rc-h4"><span data-lang-inline="es" class="active">Datos y copias de seguridad</span><span data-lang-inline="en">Data and backups</span></h4><p class="rc-body"><span data-lang="es" class="active">La app hace copias de seguridad automáticas cada 6 horas. El módulo guarda los datos hasta por 72 horas sin conexión. El historial se conserva 90 días en el plan Básico y 1 año en Pro y Cooperativa.</span><span data-lang="en">The app makes automatic backups every 6 hours. The module stores data for up to 72 hours offline. History is kept for 90 days on Basic and 1 year on Pro and Cooperative.</span></p><h4 class="rc-h4"><span data-lang-inline="es" class="active">Precios</span><span data-lang-inline="en">Prices</span></h4><p class="rc-body"><span data-lang="es" class="active">Todos los precios están en dólares estadounidenses (USD). El Kit M y el Kit L tienen precio estimado; el precio final se confirma al cotizar.</span><span data-lang="en">All prices are in US dollars (USD). Kit M and Kit L have estimated prices; the final price is confirmed with your quote.</span></p>
+  </div>
+</div>
+
+<script>
+  function syncOptions(l){document.querySelectorAll('option[data-es]').forEach(function(o){o.textContent=o.getAttribute('data-'+l);});}
+  (function(){var n=document.getElementById('zocaNav');function f(){if(!n)return;n.classList.toggle('solid',!document.body.classList.contains('is-home')||window.scrollY>window.innerHeight*0.6);}window.addEventListener('scroll',f,{passive:true});f();})();
+
+  
+  function openModal(id){ var m=document.getElementById('m-'+id); if(!m) return; document.querySelectorAll('.rc-modal.open').forEach(function(x){x.classList.remove('open');}); m.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeModal(){ document.querySelectorAll('.rc-modal.open').forEach(function(x){x.classList.remove('open');}); document.body.style.overflow=''; }
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+
+  let currentLang = 'es';
+  const L = (es, en) => currentLang === 'es' ? es : en;
+
+  const KITS = {
+    s:   { es: 'Kit S',        en: 'Kit S',        min: 550,  max: 550,  panels: 20, form: 'kit-s' },
+    m:   { es: 'Kit M',        en: 'Kit M',        min: 700,  max: 900,  panels: 48, form: 'kit-m' },
+    std: { es: 'Kit Estándar', en: 'Standard Kit', min: 1550, max: 1550, panels: 51, form: 'kit-estandar' },
+    l:   { es: 'Kit L',        en: 'Kit L',        min: 1100, max: 1400, panels: 80, form: 'kit-l' }
+  };
+  const PLANS = {
+    basic: { es: 'Básico', en: 'Basic', p: 5 },
+    pro:   { es: 'Pro', en: 'Pro', p: 8 },
+    coop:  { es: 'Cooperativa', en: 'Cooperative', p: 20 }
+  };
+  const BUY = { solo: ['Individual', 'Individual'], coop: ['Cooperativa (10 familias)', 'Cooperative (10 families)'] };
+  const PAY = { full: ['Pago único', 'One-time payment'], '12m': ['Plan 12 meses', '12-month plan'] };
+  const sel = { size: 's', buy: 'solo', pay: 'full', plan: 'basic' };
+  const stepOrder = ['step-size', 'step-buy', 'step-pay', 'step-plan'];
+
+  function toggleStep(id) {
+    const el = document.getElementById(id);
+    const isOpen = el.classList.contains('open');
+    stepOrder.forEach(s => document.getElementById(s).classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  }
+
+  function openNextStep(currentId) {
+    const idx = stepOrder.indexOf(currentId);
+    const cur = document.getElementById(currentId);
+    cur.classList.remove('open');
+    cur.classList.add('done');
+    if (idx < stepOrder.length - 1) {
+      const nextEl = document.getElementById(stepOrder[idx + 1]);
+      nextEl.classList.add('open');
+      setTimeout(() => nextEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+    } else {
+      const card = document.querySelector('.summary-card');
+      if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function markSelected(step) {
+    document.querySelectorAll('.config-opt[data-step="' + step + '"]').forEach(b => {
+      b.classList.toggle('selected', b.dataset.key === sel[step]);
+    });
+  }
+
+  function choose(step, key) {
+    sel[step] = key;
+    if (step === 'buy' && key === 'coop') { sel.plan = 'coop'; markSelected('plan'); }
+    if (step === 'buy' && key === 'solo' && sel.plan === 'coop') { sel.plan = 'basic'; markSelected('plan'); }
+    markSelected(step);
+    updateTotal();
+  }
+
+  function pickKit(key) {
+    choose('size', key);
+    stepOrder.forEach(s => document.getElementById(s).classList.remove('open'));
+    document.getElementById('step-size').classList.add('open');
+    goTo('configurador');
+  }
+
+  function money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+  function range(a, b) { return a === b ? money(a) : money(a) + '–' + money(b).slice(1); }
+
+  function setSub(id, txt) { const el = document.getElementById(id); if (el) el.textContent = txt; }
+
+  function drawDiagram(k) {
+    const box = document.getElementById('cv-box');
+    const grid = document.getElementById('cv-grid');
+    const door = document.getElementById('cv-door');
+    if (!box) return;
+    const w = Math.min(200, 50 + k.panels * 1.8);
+    const x = 130 - w / 2;
+    box.setAttribute('x', x); box.setAttribute('width', w);
+    door.setAttribute('x', x + w / 2 - 13);
+    const cols = Math.max(2, Math.round(w / 22));
+    let g = '';
+    for (let i = 1; i < cols; i++) {
+      const xx = x + (w / cols) * i;
+      g += '<line x1="' + xx + '" y1="60" x2="' + xx + '" y2="170" stroke="rgba(245,240,224,.18)" stroke-width="0.8"/>';
+    }
+    for (let j = 1; j < 3; j++) {
+      const yy = 60 + (110 / 3) * j;
+      g += '<line x1="' + x + '" y1="' + yy + '" x2="' + (x + w) + '" y2="' + yy + '" stroke="rgba(245,240,224,.18)" stroke-width="0.8"/>';
+    }
+    grid.innerHTML = g;
+    const fam = document.getElementById('cv-fam');
+    if (sel.buy === 'coop') {
+      let f = '';
+      for (let i = 0; i < 10; i++) f += '<circle cx="' + (238 + (i % 5) * 15) + '" cy="' + (110 + Math.floor(i / 5) * 15) + '" r="4.5" fill="none" stroke="#B98A4A" stroke-width="1"/>';
+      f += '<text x="238" y="152" font-size="9" fill="rgba(245,240,224,.7)" font-family="Cormorant Garamond, serif" font-style="italic">' + L('10 familias', '10 families') + '</text>';
+      fam.innerHTML = f; fam.setAttribute('opacity', '1');
+    } else { fam.innerHTML = ''; fam.setAttribute('opacity', '0'); }
+    document.getElementById('cv-dim').textContent = k.panels + ' ' + L('paneles', 'panels') + (sel.size === 'std' ? ' · 3 × 3 m' : '');
+  }
+
+  function updateTotal() {
+    const k = KITS[sel.size], p = PLANS[sel.plan];
+    const div = sel.buy === 'coop' ? 10 : 1;
+    const memb = (sel.buy === 'coop' && sel.plan === 'coop') ? p.p / 10 : p.p;
+    const kMin = k.min / div, kMax = k.max / div;
+
+    setSub('sub-size', L(k.es, k.en) + ' · ' + k.panels + ' ' + L('paneles', 'panels'));
+    setSub('sub-buy', L(BUY[sel.buy][0], BUY[sel.buy][1]));
+    setSub('sub-pay', L(PAY[sel.pay][0], PAY[sel.pay][1]));
+    setSub('sub-plan', L(p.es, p.en) + ' · ' + money(p.p) + L('/mes', '/mo'));
+    ['sub-size','sub-buy','sub-pay','sub-plan'].forEach(() => {});
+
+    setSub('sl-size', L(k.es, k.en));
+    setSub('sl-buy', L(BUY[sel.buy][0], BUY[sel.buy][1]));
+    setSub('sl-pay', L(PAY[sel.pay][0], PAY[sel.pay][1]));
+    setSub('sl-plan', L(p.es, p.en));
+
+    document.getElementById('sum-price-label').textContent = sel.buy === 'coop' ? L('Kit por familia', 'Kit per family') : 'Total';
+    document.getElementById('summary-price').textContent = range(kMin, kMax);
+
+    const mo = L('/mes', '/mo');
+    if (sel.pay === '12m') {
+      const a = kMin / 12 + memb, b = kMax / 12 + memb;
+      setSub('summary-monthly', L('Mes 1–12: ', 'Months 1–12: ') + range(a, b) + mo + L(' (kit + membresía)', ' (kit + membership)'));
+      setSub('summary-after', L('Desde el mes 13: ', 'From month 13: ') + money(memb) + mo);
+    } else {
+      setSub('summary-monthly', L('Membresía: ', 'Membership: ') + money(memb) + mo + (memb !== p.p ? L(' por familia', ' per family') : ''));
+      setSub('summary-after', L('Incluye 1 mes de plan Pro sin costo', 'Includes 1 month of Pro at no cost'));
+    }
+    const notes = [];
+    if (k.min !== k.max) notes.push(L('Precio estimado. Te confirmamos el precio final al cotizar.', 'Estimated price. We confirm the final price with your quote.'));
+    if (sel.buy === 'coop') notes.push(L('Calculado para 10 familias por kit con el plan Cooperativa.', 'Calculated for 10 families per kit on the Cooperative plan.'));
+    setSub('summary-note', notes.join(' '));
+    drawDiagram(k);
+  }
+
+  function toggleLang() {
+    currentLang = currentLang === 'es' ? 'en' : 'es';
+    document.getElementById('langBtn').textContent = currentLang === 'es' ? 'English' : 'Español';
+    document.querySelectorAll('[data-lang]').forEach(el => el.classList.toggle('active', el.dataset.lang === currentLang));
+    document.querySelectorAll('[data-lang-inline]').forEach(el => el.classList.toggle('active', el.dataset.langInline === currentLang));
+    syncOptions(currentLang);
+    updateTotal();
+  }
+
+  const PAGE_OF = { sobre:'inicio', resumen:'inicio', problema:'producto', iot:'producto', como:'producto', pago:'kits', inversion:'kits', plans:'membresias', faq:'preguntas', order:'contacto' };
+  const PAGES = ['inicio','producto','kits','configurador','membresias','preguntas','contacto'];
+  function showPage(name) {
+    if (PAGES.indexOf(name) < 0) name = 'inicio';
+    document.querySelectorAll('.rc-page').forEach(function(p){ p.classList.toggle('active', p.dataset.page === name); });
+    document.querySelectorAll('.nav-links a.nav-link').forEach(function(a){ a.classList.toggle('current', a.getAttribute('href') === '#' + name); });
+    document.body.classList.toggle('is-home', name === 'inicio');
+    closeModal();
+    window.scrollTo(0, 0);
+    var n = document.getElementById('zocaNav'); if (n) n.classList.toggle('solid', name !== 'inicio');
+  }
+  function goTo(id) {
+    var name = PAGE_OF[id] || id;
+    if (location.hash === '#' + name) showPage(name); else location.hash = name;
+  }
+  window.addEventListener('hashchange', function(){ showPage(location.hash.slice(1)); });
+
+  function scrollToOrderWithConfig() {
+    const k = KITS[sel.size];
+    const kitEl = document.getElementById('fkit'); if (kitEl) kitEl.value = k.form;
+    const payEl = document.getElementById('fpayment'); if (payEl) payEl.value = sel.pay;
+    const notesEl = document.getElementById('fnotes');
+    if (notesEl) {
+      notesEl.value = L('Configuración: ', 'Configuration: ') + L(k.es, k.en) + ' · ' +
+        L(BUY[sel.buy][0], BUY[sel.buy][1]) + ' · ' + L(PAY[sel.pay][0], PAY[sel.pay][1]) + ' · ' +
+        L('Membresía ', 'Membership ') + L(PLANS[sel.plan].es, PLANS[sel.plan].en) + ' · ' +
+        document.getElementById('sum-price-label').textContent + ' ' + document.getElementById('summary-price').textContent + ' USD';
+    }
+    goTo('order');
+  }
+
+  function submitForm(e) {
+    e.preventDefault();
+    const fname = document.getElementById('fname').value.trim();
+    const femail = document.getElementById('femail').value.trim();
+    const fkit = document.getElementById('fkit').value;
+    if (!fname || !femail || !fkit) return;
+    document.getElementById('formBox').style.display = 'none';
+    document.getElementById('successBox').style.display = 'block';
+  }
+
+  updateTotal();
+  showPage(location.hash.slice(1) || 'inicio');
+</script>
+
+</body>
+</html>
